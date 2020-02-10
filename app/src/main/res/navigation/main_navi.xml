@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navi"
+    app:startDestination="@id/todoFragment">
+
+    <fragment
+        android:id="@+id/todoFragment"
+        android:name="kr.ac.jejunu.rxpractice.ui.fragment.TodoFragment"
+        tools:layout="@layout/todo_fragment"
+        android:label="TodoFragment" >
+        <action
+            android:id="@+id/action_todoFragment_to_scheduleAddFragment"
+            app:destination="@id/scheduleAddFragment" />
+        <action
+            android:id="@+id/action_todoFragment_to_userAddFragment"
+            app:destination="@id/userAddFragment" />
+        <action
+            android:id="@+id/action_todoFragment_to_userListFragment"
+            app:destination="@id/userListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleAddFragment"
+        android:name="kr.ac.jejunu.rxpractice.ui.fragment.ScheduleAddFragment"
+        android:label="ScheduleAddFragment"
+        tools:layout="@layout/add_schedule_fragment"
+        />
+    <fragment
+        android:id="@+id/userAddFragment"
+        android:name="kr.ac.jejunu.rxpractice.ui.fragment.UserAddFragment"
+        android:label="UserAddFragment"
+        tools:layout="@layout/add_user_fragment">
+        <action
+            android:id="@+id/action_userAddFragment_to_todoFragment"
+            app:popUpTo="@layout/todo_fragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/todoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userListFragment"
+        android:name="kr.ac.jejunu.rxpractice.ui.fragment.UserListFragment"
+        android:label="UserListFragment"
+        tools:layout="@layout/user_search_fragment"/>
+</navigation>
