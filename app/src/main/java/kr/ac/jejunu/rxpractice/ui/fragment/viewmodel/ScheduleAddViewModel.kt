@@ -53,7 +53,8 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
             name = userName,
             title = title,
             description = description,
-            date = c
+            cal = c,
+            date = date
         )
         CompositeDisposable().add(
             repository.insertSchedule(schedule)
@@ -70,7 +71,7 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
     @SuppressLint("SimpleDateFormat")
     private fun dateToCalendar(dateStr: String, timeStr: String): Calendar {
         val d = "$dateStr $timeStr"
-        val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm")
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm")
         val date = simpleDateFormat.parse(d)
         calendar.time = date
         return calendar

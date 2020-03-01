@@ -6,6 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.model.User
+import java.util.*
 
 class RoomRepository(application:Application) {
     private var scheduleDao : ScheduleDao
@@ -33,7 +34,7 @@ class RoomRepository(application:Application) {
     fun getSchedules(today : String) : Single<List<Schedule>> {
         return scheduleDao.todayTodo(today)
     }
-    fun getAllSchedules() : LiveData<List<Schedule>> {
+    fun getAllSchedules() : List<Calendar> {
         return scheduleDao.getAllDay()
     }
 }

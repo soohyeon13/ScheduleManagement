@@ -6,14 +6,15 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import kr.ac.jejunu.rxpractice.model.Schedule
 import java.sql.Date
+import java.util.*
 
 @Dao
 interface ScheduleDao {
-    @Query("SELECT * FROM schedule WHERE cal_date LIKE :today")
+    @Query("SELECT * FROM schedule WHERE date LIKE :today")
     fun todayTodo(today : String) : Single<List<Schedule>>
 
-    @Query("SELECT cal_date FROM schedule")
-    fun getAllDay(): LiveData<List<Schedule>>
+    @Query("SELECT cal FROM schedule")
+    fun getAllDay(): List<Calendar>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun todoInsert(vararg schedule: Schedule) : Completable
 

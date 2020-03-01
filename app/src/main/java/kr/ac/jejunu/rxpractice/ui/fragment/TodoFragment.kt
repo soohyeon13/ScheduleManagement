@@ -1,5 +1,6 @@
 package kr.ac.jejunu.rxpractice.ui.fragment
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.animation.AnimationUtils
 import androidx.databinding.library.baseAdapters.BR
@@ -16,11 +17,14 @@ import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.databinding.TodoFragmentBinding
 import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.TodoViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.todo_fragment) {
     private var isOpen = false
-    private val event : LiveData<List<Schedule>> = null
+    private val repository: RoomRepository by lazy {
+        RoomRepository(activity!!.application)
+    }
 
     override fun getViewModel(): Class<TodoViewModel> {
         return TodoViewModel::class.java
@@ -31,6 +35,12 @@ class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.t
     }
 
     override fun initView() {
+        val event: List<Calendar> = repository.getAllSchedules()
+        val list: MutableList<EventDay> = mutableListOf()
+        for (i in event.indices) {
+            list.add(EventDay(event[i], R.drawable.ic_add))
+        }
+        binding.calendar.setEvents(list)
         val fabOpen =
             AnimationUtils.loadAnimation(this@TodoFragment.requireContext(), R.anim.fab_open)
         val fabClose =
@@ -43,17 +53,15 @@ class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.t
             this@TodoFragment.requireContext(),
             R.anim.rotate_anticlockwise
         )
-        val calendar = Calendar.getInstance()
-        Log.d("teste",calendar.toString())
-
         binding.calendar.setOnDayClickListener(object : OnDayClickListener {
+            @SuppressLint("SimpleDateFormat")
             override fun onDayClick(eventDay: EventDay) {
-                val fragment = TodoListBottomFragment.newInstance(eventDay.toString())
-                fragment.show(childFragmentManager,"todo_list_fragment")
-                Log.d("test",eventDay.calendar.time.toString())
-//                val event: List<EventDay> = arrayListOf(EventDay(eventDay.calendar,R.drawable.favorite_selector))
-//                var select : Calendar = binding.calendar.firstSelectedDate
-//                Log.d("test",select.toString())
+                val cal : Calendar = eventDay.calendar
+                val dateFormat = "yyyy-MM-dd"
+                val simpleDateFormat = SimpleDateFormat(dateFormat)
+                val selectDay = simpleDateFormat.format(cal.time)
+                val fragment = TodoListBottomFragment.newInstance(selectDay)
+                fragment.show(childFragmentManager, "todo_list_fragment")
             }
         })
         with(viewModel) {
@@ -77,8 +85,9 @@ class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.t
 
                 binding.addPerson.setOnClickListener {
                     val action = TodoFragmentDirections.actionTodoFragmentToUserAddFragment()
-                    val extras = FragmentNavigatorExtras(binding.addPerson to binding.addPerson.transitionName)
-                    findNavController().navigate(action,extras)
+                    val extras =
+                        FragmentNavigatorExtras(binding.addPerson to binding.addPerson.transitionName)
+                    findNavController().navigate(action, extras)
                 }
                 binding.addSchedule.setOnClickListener {
                     val action = TodoFragmentDirections.actionTodoFragmentToScheduleAddFragment()

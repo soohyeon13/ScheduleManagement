@@ -18,6 +18,8 @@ data class Schedule(
     var title: String,
     @ColumnInfo(name = "description")
     var description: String,
-    @ColumnInfo(name = "cal_date")
-    var date: Calendar?
+    @ColumnInfo(name = "cal")
+    var cal: Calendar?,
+    @ColumnInfo(name = "date")
+    var date: String
 )

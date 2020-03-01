@@ -17,4 +17,11 @@
     <string name="complete">완료</string>
     <string name="person_select">고객 선택</string>
     <string name="test_name">테스트</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="saturday">토</string>
+    <string name="sunday">일</string>
 </resources>

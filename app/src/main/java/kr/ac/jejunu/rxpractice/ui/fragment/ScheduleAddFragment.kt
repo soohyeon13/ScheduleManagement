@@ -27,11 +27,12 @@ import java.util.*
 class ScheduleAddFragment :
     BaseFragment<AddScheduleFragmentBinding, ScheduleAddViewModel>(R.layout.add_schedule_fragment) {
     private val calendar = Calendar.getInstance()
-    private var userName =""
+    private var userName = ""
     private var phoneNum = ""
-    private val repository : RoomRepository by lazy {
+    private val repository: RoomRepository by lazy {
         RoomRepository(activity!!.application)
     }
+
     override fun getViewModel(): Class<ScheduleAddViewModel> {
         return ScheduleAddViewModel::class.java
     }
@@ -78,6 +79,7 @@ class ScheduleAddFragment :
         timeDialog.show()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun getDateDialog() {
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -86,8 +88,14 @@ class ScheduleAddFragment :
         val dateDialog = DatePickerDialog(
             this.requireContext(),
             DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                val date = "$dayOfMonth-$month-$year"
-                binding.dateText.setText(date)
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+                val dateFormat = "yyyy-MM-dd"
+                val simpleDateFormat = SimpleDateFormat(dateFormat)
+//                val date = "$dayOfMonth-$month-$year"
+                binding.dateText.setText(simpleDateFormat.format(calendar.time))
             },
             year,
             month,
