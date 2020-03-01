@@ -18,11 +18,9 @@ class UserAddViewModel(application: Application):BaseViewModel<User>(application
     val getUser = SingleLiveEvent<Unit>()
     val cancelUser = SingleLiveEvent<Unit>()
     fun onSaveUser() {
-        Log.d("test on save user","start")
         saveUser.call()
     }
     fun saveUser(user: User) {
-        Log.d("test","saveUser")
         CompositeDisposable().add(repository.insertUser(user)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

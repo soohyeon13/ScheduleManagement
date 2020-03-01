@@ -16,9 +16,6 @@
         <action
             android:id="@+id/action_todoFragment_to_userAddFragment"
             app:destination="@id/userAddFragment" />
-        <action
-            android:id="@+id/action_todoFragment_to_userListFragment"
-            app:destination="@id/userListFragment" />
     </fragment>
     <fragment
         android:id="@+id/scheduleAddFragment"
@@ -41,5 +38,6 @@
         android:id="@+id/userListFragment"
         android:name="kr.ac.jejunu.rxpractice.ui.fragment.UserListFragment"
         android:label="UserListFragment"
-        tools:layout="@layout/user_search_fragment"/>
+        tools:layout="@layout/user_list_fragment"
+        />
 </navigation>

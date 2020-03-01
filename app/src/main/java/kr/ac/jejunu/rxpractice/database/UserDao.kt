@@ -9,9 +9,12 @@ import kr.ac.jejunu.rxpractice.model.User
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user WHERE user_name LIKE :userName")
-    fun getUsers(userName: String): LiveData<User>
+    fun getUsers(userName: String): Single<List<User>>
 
-    @Insert
+    @Query("SELECT id FROM user WHERE user_name LIKE:userName AND user_phone_num LIKE:userPhone")
+    fun getUserId(userName:String,userPhone:String) : Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(vararg user: User) : Completable
 
     @Delete

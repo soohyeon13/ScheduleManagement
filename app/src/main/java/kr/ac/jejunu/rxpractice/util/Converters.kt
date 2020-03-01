@@ -2,15 +2,18 @@ package kr.ac.jejunu.rxpractice.util
 
 import androidx.room.TypeConverter
 import java.sql.Date
+import java.util.*
 
-class Converters {
+object Converters {
     @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return if (value == null) null else Date(value)
+    @JvmStatic
+    fun fromTimestamp(value: Long?): Calendar? = value?.let { value ->
+        GregorianCalendar().also { calendar ->
+            calendar.timeInMillis = value
+        }
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
+    @JvmStatic
+    fun toTimestamp(timestamp: Calendar?): Long? = timestamp?.timeInMillis
 }

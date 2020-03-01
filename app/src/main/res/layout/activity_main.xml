@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="mainViewModel"
+            type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.MainViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,13 +43,14 @@
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/search_box"
                 android:drawableStart="@drawable/ic_search_24px"
-                android:inputType="text"
                 android:hint="@string/input_name_search"
+                android:inputType="text"
                 android:lines="1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

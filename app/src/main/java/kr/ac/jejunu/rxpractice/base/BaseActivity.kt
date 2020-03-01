@@ -4,21 +4,27 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProviders
 import io.reactivex.disposables.CompositeDisposable
 
 
-abstract class BaseActivity<T : ViewDataBinding>
+abstract class BaseActivity<T : ViewDataBinding,VM:BaseViewModel<*>>
     (
     private val layoutId : Int
 ) : AppCompatActivity() {
-    lateinit var binding : T
+    protected lateinit var binding : T
+    protected lateinit var viewModel : VM
+
     private val compositeDisposable = CompositeDisposable()
 
-    abstract fun initView()
+    protected abstract fun getViewModel() : Class<VM>
+    protected abstract fun getBindingVariable() : Int
+    protected abstract fun initView()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,layoutId)
+        this.viewModel = if (::viewModel.isInitialized) viewModel else ViewModelProviders.of(this).get(getViewModel())
         binding.setLifecycleOwner { this.lifecycle }
         initView()
     }

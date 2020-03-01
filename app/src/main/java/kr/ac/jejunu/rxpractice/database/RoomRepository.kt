@@ -20,8 +20,11 @@ class RoomRepository(application:Application) {
     fun insertUser(user : User): Completable {return userDao.insertUser(user)}
     fun deleteUser(user : User): Completable {return userDao.deleteUser(user)}
     fun updateUser(user : User): Completable {return userDao.updateUser(user)}
-    fun getUser(userName : String) : LiveData<User> {
+    fun getUser(userName : String) : Single<List<User>> {
         return userDao.getUsers(userName)
+    }
+    fun getUserId(userName:String,userPhone:String) : Int {
+        return userDao.getUserId(userName,userPhone)
     }
 
     fun insertSchedule(schedule: Schedule) : Completable { return scheduleDao.todoInsert(schedule)}
@@ -29,5 +32,8 @@ class RoomRepository(application:Application) {
     fun updateSchedule(schedule: Schedule) : Completable {return scheduleDao.todoUpdate(schedule)}
     fun getSchedules(today : String) : Single<List<Schedule>> {
         return scheduleDao.todayTodo(today)
+    }
+    fun getAllSchedules() : LiveData<List<Schedule>> {
+        return scheduleDao.getAllDay()
     }
 }

@@ -6,7 +6,7 @@ import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.model.User
 import kr.ac.jejunu.rxpractice.util.Converters
 
-@Database(entities = [User::class, Schedule::class],version = 6)
+@Database(entities = [User::class, Schedule::class],version = 11)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
@@ -27,23 +27,5 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return instance
         }
-//        private var INSTANCE: AppDatabase? = null
-//
-//        fun getInstance(context: Context): AppDatabase {
-//            if (INSTANCE == null) {
-//                synchronized(this) {
-//                    INSTANCE = Room.databaseBuilder(
-//                        context,
-//                        AppDatabase::class.java, "app.db"
-//                    )
-//                        .build()
-//                }
-//            }
-//            return INSTANCE as AppDatabase
-//        }
-//
-//        fun destroyInstance() {
-//            INSTANCE == null
-//        }
     }
 }

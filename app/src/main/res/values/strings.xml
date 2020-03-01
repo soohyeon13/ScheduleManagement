@@ -7,7 +7,7 @@
     <string name="save">저장</string>
     <string name="cancel">취소</string>
     <string name="title">제목</string>
-    <string name="date">날짜</string>
+    <string name="date">Month/Day</string>
     <string name="date_select">날짜선택</string>
     <string name="time">시간</string>
     <string name="time_select">시간선택</string>
@@ -15,4 +15,6 @@
     <string name="transition_add_person">add person</string>
     <string name="no_schedule">일정이 없습니다.</string>
     <string name="complete">완료</string>
+    <string name="person_select">고객 선택</string>
+    <string name="test_name">테스트</string>
 </resources>

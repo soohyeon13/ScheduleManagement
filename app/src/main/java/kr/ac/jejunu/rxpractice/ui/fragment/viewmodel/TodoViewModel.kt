@@ -1,15 +1,12 @@
 package kr.ac.jejunu.rxpractice.ui.fragment.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Single
-import io.reactivex.observers.DisposableSingleObserver
 import kr.ac.jejunu.rxpractice.base.BaseViewModel
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.model.Schedule
-import kr.ac.jejunu.rxpractice.ui.adapter.TodoListAdapter
 import kr.ac.jejunu.rxpractice.util.SingleLiveEvent
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -21,7 +18,6 @@ class TodoViewModel(application: Application) : BaseViewModel<List<Schedule>>(ap
     val date: LiveData<String> get() = _date
     val clickDate = SingleLiveEvent<Unit>()
     val clickFab = SingleLiveEvent<Unit>()
-    var todoAdapter = TodoListAdapter()
 
     private val repository: RoomRepository by lazy {
         RoomRepository(application)
@@ -40,24 +36,19 @@ class TodoViewModel(application: Application) : BaseViewModel<List<Schedule>>(ap
         return today.format(formatter)
     }
 
-    fun getSchedule(todayDate: String) {
-        addDisposable(repository.getSchedules(todayDate),
-            object : DisposableSingleObserver<List<Schedule>>() {
-                override fun onSuccess(t: List<Schedule>) {
-                    todoAdapter.setSchedules(t)
-                    todoAdapter.notifyDataSetChanged()
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.d("TodoViewModel",e.message)
-                }
-            })
-    }
-
-    fun onClickDate() {
-        clickDate.call()
-    }
-
+//    fun getSchedule(todayDate: String) {
+//        addDisposable(repository.getSchedules(todayDate),
+//            object : DisposableSingleObserver<List<Schedule>>() {
+//                override fun onSuccess(t: List<Schedule>) {
+//                    todoAdapter.setSchedules(t)
+//                    todoAdapter.notifyDataSetChanged()
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    Log.d("TodoViewModel",e.message)
+//                }
+//            })
+//    }
     fun onFabAddClick() {
         clickFab.call()
     }

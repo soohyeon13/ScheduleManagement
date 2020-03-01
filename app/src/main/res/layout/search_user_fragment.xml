@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="viewmodel"
+            name="userListViewModel"
             type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.UserListViewModel" />
     </data>
 
@@ -12,23 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/test"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/userList"
+            bind_users="@{userListViewModel.users}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            bind_users="@{viewmodel.users}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/test" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

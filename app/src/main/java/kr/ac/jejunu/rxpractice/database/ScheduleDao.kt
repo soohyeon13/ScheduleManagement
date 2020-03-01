@@ -9,10 +9,12 @@ import java.sql.Date
 
 @Dao
 interface ScheduleDao {
-    @Query("SELECT * FROM schedule WHERE date LIKE :today")
+    @Query("SELECT * FROM schedule WHERE cal_date LIKE :today")
     fun todayTodo(today : String) : Single<List<Schedule>>
 
-    @Insert
+    @Query("SELECT cal_date FROM schedule")
+    fun getAllDay(): LiveData<List<Schedule>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun todoInsert(vararg schedule: Schedule) : Completable
 
     @Delete

@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
-            name="viewmodel"
+            name="userAddViewModel"
             type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.UserAddViewModel" />
     </data>
 
@@ -42,7 +41,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="27dp"
             android:text="@string/get_user_from_phone_book"
-            android:onClick = "@{() -> viewmodel.getUserFromContacts()}"
+            android:onClick = "@{() -> userAddViewModel.getUserFromContacts()}"
             app:layout_constraintBottom_toBottomOf="@+id/textInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textInputLayout"
@@ -81,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:onClick="@{() -> viewmodel.onSaveUser()}"
+            android:onClick="@{() -> userAddViewModel.onSaveUser()}"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/cancelBtn"
@@ -92,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
-            android:onClick="@{()->viewmodel.cancelUser()}"
+            android:onClick="@{()->userAddViewModel.cancelUser()}"
             app:layout_constraintBottom_toBottomOf="@+id/saveBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/saveBtn" />

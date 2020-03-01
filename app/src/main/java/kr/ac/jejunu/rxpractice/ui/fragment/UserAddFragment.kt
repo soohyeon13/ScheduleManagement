@@ -1,21 +1,13 @@
 package kr.ac.jejunu.rxpractice.ui.fragment
 
-import android.Manifest
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.core.content.PermissionChecker.checkSelfPermission
-import androidx.core.content.contentValuesOf
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import kr.ac.jejunu.rxpractice.R
@@ -30,7 +22,7 @@ class UserAddFragment :BaseFragment<AddUserFragmentBinding,UserAddViewModel>(R.l
     }
 
     override fun getBindingVariable(): Int {
-        return BR.viewmodel
+        return BR.userAddViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +40,11 @@ class UserAddFragment :BaseFragment<AddUserFragmentBinding,UserAddViewModel>(R.l
                     Toast.makeText(this@UserAddFragment.requireContext(),"이름 or 전화번호 입력해 주세요",Toast.LENGTH_SHORT).show()
                     return@Observer
                 }
-                    val user = User(userName = name.toString(),userNum = num.toString())
+                val user = User(userName = name.toString(),userNum = num.toString())
                 saveUser(user)
                 Toast.makeText(this@UserAddFragment.requireContext(),"$name 등록 완료",Toast.LENGTH_SHORT).show()
-                val action = UserAddFragmentDirections.actionUserAddFragmentToTodoFragment()
-                findNavController().navigate(action)
+//                val action = UserAddFragmentDirections.actionUserAddFragmentToTodoFragment()
+                findNavController().popBackStack()
             })
             getUser.observe(this@UserAddFragment, Observer {
                 val intent = Intent(Intent.ACTION_PICK,ContactsContract.Contacts.CONTENT_URI)
@@ -75,10 +67,10 @@ class UserAddFragment :BaseFragment<AddUserFragmentBinding,UserAddViewModel>(R.l
                 var phoneNum = ""
                 val contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
                 var hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
-                if (hasPhone.equals("1",ignoreCase = true)) {
-                    hasPhone = "true"
+                hasPhone = if (hasPhone.equals("1",ignoreCase = true)) {
+                    "true"
                 }else {
-                    hasPhone = "false"
+                    "false"
                 }
 
                 if(java.lang.Boolean.parseBoolean(hasPhone)) {
