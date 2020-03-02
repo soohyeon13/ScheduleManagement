@@ -1,7 +1,7 @@
 package kr.ac.jejunu.rxpractice.ui.fragment
 
 import android.util.Log
-import androidx.databinding.library.baseAdapters.BR
+import kr.ac.jejunu.rxpractice.BR
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.base.BaseFragment
 import kr.ac.jejunu.rxpractice.databinding.UserListFragmentBinding

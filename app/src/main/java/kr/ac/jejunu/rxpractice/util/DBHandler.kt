@@ -12,8 +12,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class DBHandler(private val context : Context) {
-    fun getSchedule(query:String):Single<List<Schedule>> {
-        Thread.sleep(1000)
-        return AppDatabase.getInstance(context)!!.scheduleDao().todayTodo(query)
-    }
+//    fun getSchedule(query:String):Single<List<Schedule>> {
+//        Thread.sleep(1000)
+//        return AppDatabase.getInstance(context)!!.scheduleDao().todayTodo(query)
+//    }
 }

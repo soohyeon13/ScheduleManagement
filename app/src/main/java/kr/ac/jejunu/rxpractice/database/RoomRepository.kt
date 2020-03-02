@@ -31,7 +31,7 @@ class RoomRepository(application:Application) {
     fun insertSchedule(schedule: Schedule) : Completable { return scheduleDao.todoInsert(schedule)}
     fun deleteSchedule(schedule: Schedule) : Completable {return scheduleDao.todoDelete(schedule)}
     fun updateSchedule(schedule: Schedule) : Completable {return scheduleDao.todoUpdate(schedule)}
-    fun getSchedules(today : String) : Single<List<Schedule>> {
+    fun getSchedules(today : String) : List<Schedule> {
         return scheduleDao.todayTodo(today)
     }
     fun getAllSchedules() : List<Calendar> {

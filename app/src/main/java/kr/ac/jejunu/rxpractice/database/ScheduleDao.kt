@@ -11,7 +11,7 @@ import java.util.*
 @Dao
 interface ScheduleDao {
     @Query("SELECT * FROM schedule WHERE date LIKE :today")
-    fun todayTodo(today : String) : Single<List<Schedule>>
+    fun todayTodo(today : String) : List<Schedule>
 
     @Query("SELECT cal FROM schedule")
     fun getAllDay(): List<Calendar>

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
-import androidx.databinding.library.baseAdapters.BR
+import kr.ac.jejunu.rxpractice.BR
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater

@@ -4,16 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigator
 import java.lang.ref.WeakReference
 
-abstract class BaseItemViewModel<T,N> :ViewModel() {
-    private lateinit var navigator : WeakReference<N>
-
-    fun getNavigator() : N {
-        return navigator.get()!!
-    }
-
-    fun setNavigator(navigator:N) {
-        this.navigator = WeakReference(navigator)
-    }
-
-    abstract fun bind(data:T)
+abstract class BaseItemViewModel<T> : ViewModel() {
+    abstract fun bind(data: T)
 }

@@ -1,21 +1,17 @@
 package kr.ac.jejunu.rxpractice.ui.fragment
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.animation.AnimationUtils
-import androidx.databinding.library.baseAdapters.BR
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
-import io.reactivex.disposables.CompositeDisposable
+import kr.ac.jejunu.rxpractice.BR
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.base.BaseFragment
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.databinding.TodoFragmentBinding
-import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.TodoViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -56,7 +52,7 @@ class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.t
         binding.calendar.setOnDayClickListener(object : OnDayClickListener {
             @SuppressLint("SimpleDateFormat")
             override fun onDayClick(eventDay: EventDay) {
-                val cal : Calendar = eventDay.calendar
+                val cal: Calendar = eventDay.calendar
                 val dateFormat = "yyyy-MM-dd"
                 val simpleDateFormat = SimpleDateFormat(dateFormat)
                 val selectDay = simpleDateFormat.format(cal.time)
