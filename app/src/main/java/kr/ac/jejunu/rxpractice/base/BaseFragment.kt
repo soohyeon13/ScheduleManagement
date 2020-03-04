@@ -35,7 +35,6 @@ abstract class BaseFragment<T : ViewDataBinding, VM : BaseViewModel<*>>(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        handler = DBHandler(this.requireContext())
         return binding.root
     }
 

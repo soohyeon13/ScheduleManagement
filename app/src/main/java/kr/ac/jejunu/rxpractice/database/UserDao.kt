@@ -11,6 +11,9 @@ interface UserDao {
     @Query("SELECT * FROM user WHERE user_name LIKE :userName")
     fun getUsers(userName: String): Single<List<User>>
 
+    @Query("SELECT * FROM user")
+    fun getAllUsers() : MutableList<User>
+
     @Query("SELECT id FROM user WHERE user_name LIKE:userName AND user_phone_num LIKE:userPhone")
     fun getUserId(userName:String,userPhone:String) : Int
 

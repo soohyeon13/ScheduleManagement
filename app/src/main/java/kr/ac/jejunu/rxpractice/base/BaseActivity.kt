@@ -25,7 +25,8 @@ abstract class BaseActivity<T : ViewDataBinding,VM:BaseViewModel<*>>
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,layoutId)
         this.viewModel = if (::viewModel.isInitialized) viewModel else ViewModelProviders.of(this).get(getViewModel())
-        binding.setLifecycleOwner { this.lifecycle }
+        binding.setVariable(getBindingVariable(),viewModel)
+        binding.lifecycleOwner = this
         initView()
     }
 

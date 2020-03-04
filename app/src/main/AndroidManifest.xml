@@ -21,6 +21,7 @@
             </intent-filter>
             <nav-graph android:value="@navigation/main_navi"/>
         </activity>
+        <activity android:name=".ui.activity.SearchActivity"/>
     </application>
 
 </manifest>

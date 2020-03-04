@@ -1,7 +1,9 @@
 package kr.ac.jejunu.rxpractice.ui.fragment
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -34,7 +36,7 @@ class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.t
         val event: List<Calendar> = repository.getAllSchedules()
         val list: MutableList<EventDay> = mutableListOf()
         for (i in event.indices) {
-            list.add(EventDay(event[i], R.drawable.ic_add))
+            list.add(EventDay(event[i], R.drawable.ic_icon))
         }
         binding.calendar.setEvents(list)
         val fabOpen =
@@ -53,11 +55,19 @@ class TodoFragment : BaseFragment<TodoFragmentBinding, TodoViewModel>(R.layout.t
             @SuppressLint("SimpleDateFormat")
             override fun onDayClick(eventDay: EventDay) {
                 val cal: Calendar = eventDay.calendar
-                val dateFormat = "yyyy-MM-dd"
-                val simpleDateFormat = SimpleDateFormat(dateFormat)
-                val selectDay = simpleDateFormat.format(cal.time)
-                val fragment = TodoListBottomFragment.newInstance(selectDay)
-                fragment.show(childFragmentManager, "todo_list_fragment")
+                if (event.contains(cal)) {
+                    val dateFormat = "yyyy-MM-dd"
+                    val simpleDateFormat = SimpleDateFormat(dateFormat)
+                    val selectDay = simpleDateFormat.format(cal.time)
+                    val fragment = TodoListBottomFragment.newInstance(selectDay)
+                    fragment.show(childFragmentManager, "todo_list_fragment")
+                } else {
+                    Toast.makeText(
+                        this@TodoFragment.requireContext(),
+                        "일정이 등록되어 있지 않습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         })
         with(viewModel) {
