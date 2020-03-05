@@ -20,6 +20,7 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
     val clickTimeEvent = SingleLiveEvent<Unit>()
     val clickSave = SingleLiveEvent<Unit>()
     val clickCancel = SingleLiveEvent<Unit>()
+    private var isCheck = true
     private var userId = 0
     private val calendar = Calendar.getInstance()
     private val repository: RoomRepository by lazy {
@@ -46,6 +47,9 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
         time: String,
         description: String
     ) {
+        Log.d("test",number)
+        Log.d("test",isCheck.toString())
+        if (number.isEmpty()) { isCheck = false }
         userId = checkUser(userName, number)
         val c = dateToCalendar(date, time)
         val schedule = Schedule(
@@ -56,15 +60,29 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
             cal = c,
             date = date
         )
-        CompositeDisposable().add(
-            repository.insertSchedule(schedule)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError {
-                    Log.d("ViewModel",it.message.toString())
-                }
-                .subscribe()
-        )
+
+        Log.d("test1",isCheck.toString())
+        if (isCheck) {
+            CompositeDisposable().add(
+                repository.insertSchedule(schedule)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError {
+                        Log.d("ViewModel",it.message.toString())
+                    }
+                    .subscribe()
+            )
+        } else {
+            CompositeDisposable().add(
+                repository.updateSchedule(schedule)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError {
+                        Log.d("ViewModel",it.message.toString())
+                    }
+                    .subscribe()
+            )
+        }
         clickSave.call()
     }
 
@@ -89,7 +107,6 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
                         .subscribe()
                 )
         }
-
         return userId
     }
 

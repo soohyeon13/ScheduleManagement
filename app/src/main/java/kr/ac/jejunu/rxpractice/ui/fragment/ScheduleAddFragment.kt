@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
@@ -29,9 +30,19 @@ class ScheduleAddFragment :
     private val calendar = Calendar.getInstance()
     private var userName = ""
     private var phoneNum = ""
+    private val DATA = "DATA"
     private val repository: RoomRepository by lazy {
         RoomRepository(activity!!.application)
     }
+
+//    companion object {
+//        fun newInstance(data : Schedule) : ScheduleAddFragment =
+//            ScheduleAddFragment().apply {
+//                val bundle = Bundle()
+//                bundle.putSerializable(DATA,data)
+//                this.arguments = bundle
+//            }
+//    }
 
     override fun getViewModel(): Class<ScheduleAddViewModel> {
         return ScheduleAddViewModel::class.java
@@ -42,6 +53,17 @@ class ScheduleAddFragment :
     }
 
     override fun initView() {
+        if (arguments?.getSerializable("schedule")!=null) {
+            val schedule = arguments?.getSerializable("schedule") as Schedule
+            val hour = schedule.cal?.get(Calendar.HOUR_OF_DAY)
+            val minute = schedule.cal?.get(Calendar.MINUTE)
+            val time = "$hour:$minute"
+            binding.userNameText.setText(schedule.name)
+            binding.titleText.setText(schedule.title)
+            binding.dateText.setText(schedule.date)
+            binding.timeText.setText(time)
+            binding.descriptionText.setText(schedule.description)
+        }
         with(viewModel) {
             clickPersonEvent.observe(this@ScheduleAddFragment, Observer {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)

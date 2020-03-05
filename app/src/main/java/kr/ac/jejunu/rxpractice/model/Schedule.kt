@@ -2,6 +2,7 @@ package kr.ac.jejunu.rxpractice.model
 
 import androidx.room.*
 import kr.ac.jejunu.rxpractice.util.Converters
+import java.io.Serializable
 import java.sql.Date
 import java.util.*
 
@@ -22,4 +23,4 @@ data class Schedule(
     var cal: Calendar?,
     @ColumnInfo(name = "date")
     var date: String
-)
+):Serializable

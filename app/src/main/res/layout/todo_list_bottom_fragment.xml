@@ -21,6 +21,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/background_transparent"
             android:src="@drawable/ic_cancel_black_24dp"
+            android:onClick="@{() -> viewModel.onCancelClick()}"
             app:layout_constraintBottom_toTopOf="@+id/todoRecycler"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
