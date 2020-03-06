@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/todoFragment"
         android:name="kr.ac.jejunu.rxpractice.ui.fragment.TodoFragment"
-        tools:layout="@layout/todo_fragment"
-        android:label="TodoFragment" >
+        tools:layout="@layout/todo_fragment">
         <action
             android:id="@+id/action_todoFragment_to_scheduleAddFragment"
             app:destination="@id/scheduleAddFragment" />
@@ -20,13 +19,11 @@
     <fragment
         android:id="@+id/scheduleAddFragment"
         android:name="kr.ac.jejunu.rxpractice.ui.fragment.ScheduleAddFragment"
-        android:label="ScheduleAddFragment"
         tools:layout="@layout/add_schedule_fragment"
         />
     <fragment
         android:id="@+id/userAddFragment"
         android:name="kr.ac.jejunu.rxpractice.ui.fragment.UserAddFragment"
-        android:label="UserAddFragment"
         tools:layout="@layout/add_user_fragment">
         <action
             android:id="@+id/action_userAddFragment_to_todoFragment"
@@ -37,7 +34,11 @@
     <fragment
         android:id="@+id/userListFragment"
         android:name="kr.ac.jejunu.rxpractice.ui.fragment.UserListFragment"
-        android:label="UserListFragment"
         tools:layout="@layout/user_list_fragment"
+        />
+    <fragment
+        android:id="@+id/action_money"
+        android:name="kr.ac.jejunu.rxpractice.ui.fragment.SalesFragment"
+        tools:layout="@layout/sales_fragment"
         />
 </navigation>
