@@ -13,6 +13,6 @@ class TodoTableItemViewModel : BaseItemViewModel<Schedule>() {
     override fun bind(data: Schedule) {
         schedule.value = data
         name.value = data.name
-        description.value = data.description
+//        description.value = data.description
     }
 }

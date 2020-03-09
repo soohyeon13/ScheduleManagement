@@ -7,17 +7,21 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.DisplayMetrics
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.add_schedule_fragment.view.*
 import kr.ac.jejunu.rxpractice.BR
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.base.BaseFragment
 import kr.ac.jejunu.rxpractice.database.AppDatabase
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.databinding.AddScheduleFragmentBinding
+import kr.ac.jejunu.rxpractice.model.Description
 import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.model.User
 import kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.ScheduleAddViewModel
@@ -30,40 +34,26 @@ class ScheduleAddFragment :
     private val calendar = Calendar.getInstance()
     private var userName = ""
     private var phoneNum = ""
+    private var selectDate = ""
+    private var list = mutableListOf<Description>()
     private val DATA = "DATA"
-    private val repository: RoomRepository by lazy {
-        RoomRepository(activity!!.application)
-    }
 
-//    companion object {
-//        fun newInstance(data : Schedule) : ScheduleAddFragment =
-//            ScheduleAddFragment().apply {
-//                val bundle = Bundle()
-//                bundle.putSerializable(DATA,data)
-//                this.arguments = bundle
-//            }
-//    }
-
-    override fun getViewModel(): Class<ScheduleAddViewModel> {
-        return ScheduleAddViewModel::class.java
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.scheduleAddViewModel
-    }
+    override fun getViewModel(): Class<ScheduleAddViewModel> = ScheduleAddViewModel::class.java
+    override fun getBindingVariable(): Int = BR.scheduleAddViewModel
 
     override fun initView() {
-        if (arguments?.getSerializable("schedule")!=null) {
-            val schedule = arguments?.getSerializable("schedule") as Schedule
-            val hour = schedule.cal?.get(Calendar.HOUR_OF_DAY)
-            val minute = schedule.cal?.get(Calendar.MINUTE)
-            val time = "$hour:$minute"
-            binding.userNameText.setText(schedule.name)
-            binding.titleText.setText(schedule.title)
-            binding.dateText.setText(schedule.date)
-            binding.timeText.setText(time)
-            binding.descriptionText.setText(schedule.description)
-        }
+        setBtnWidth()
+//        if (arguments?.getSerializable("schedule") != null) {
+//            val schedule = arguments?.getSerializable("schedule") as Schedule
+//            val hour = schedule.cal?.get(Calendar.HOUR_OF_DAY)
+//            val minute = schedule.cal?.get(Calendar.MINUTE)
+//            val time = "$hour:$minute"
+//            binding.userNameText.setText(schedule.name)
+//            binding.titleText.setText(schedule.title)
+//            binding.dateText.setText(schedule.date)
+//            binding.timeText.setText(time)
+//            binding.descriptionText.setText(schedule.description)
+//        }
         with(viewModel) {
             clickPersonEvent.observe(this@ScheduleAddFragment, Observer {
                 val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
@@ -72,16 +62,23 @@ class ScheduleAddFragment :
             clickDateEvent.observe(this@ScheduleAddFragment, Observer {
                 getDateDialog()
             })
-            clickTimeEvent.observe(this@ScheduleAddFragment, Observer {
-                getTimeDialog()
-            })
             clickSave.observe(this@ScheduleAddFragment, Observer {
                 findNavController().popBackStack()
             })
             clickCancel.observe(this@ScheduleAddFragment, Observer {
                 findNavController().popBackStack()
             })
+            toastShow.observe(this@ScheduleAddFragment, Observer {
+                Toast.makeText(requireContext(),"정보를 입력해주세요.",Toast.LENGTH_SHORT).show()
+            })
         }
+    }
+
+    private fun setBtnWidth() {
+        val displayMetrics = DisplayMetrics()
+        activity!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        val width = displayMetrics.widthPixels
+        binding.saveBtn.width = (width / 3) * 2
     }
 
     private fun getTimeDialog() {
@@ -92,7 +89,8 @@ class ScheduleAddFragment :
             this.requireContext(),
             TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                 val time = "$hourOfDay:$minute"
-                binding.timeText.setText(time)
+                selectDate = selectDate.plus(" ").plus(time)
+                binding.dateInputText.setText(selectDate)
             },
             hour,
             minute,
@@ -116,8 +114,8 @@ class ScheduleAddFragment :
 
                 val dateFormat = "yyyy-MM-dd"
                 val simpleDateFormat = SimpleDateFormat(dateFormat)
-//                val date = "$dayOfMonth-$month-$year"
-                binding.dateText.setText(simpleDateFormat.format(calendar.time))
+                selectDate = simpleDateFormat.format(calendar.time)
+                getTimeDialog()
             },
             year,
             month,
@@ -157,7 +155,7 @@ class ScheduleAddFragment :
                     phones.close()
                 }
                 binding.userNameText.setText(userName)
-                binding.numText.text = phoneNum
+                binding.userNumInputText.setText(phoneNum)
             }
             cursor.close()
         }

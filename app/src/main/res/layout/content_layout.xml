@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="scheduleAddViewModel"
+            type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.ScheduleAddViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/handCare"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/hand_care"
+            android:onClick="@{() -> scheduleAddViewModel.onHandClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckHand())}"
+            app:layout_constraintEnd_toStartOf="@+id/footCare"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/footCare"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/foot_care"
+            android:onClick="@{() -> scheduleAddViewModel.onFootClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckFoot())}"
+            app:layout_constraintEnd_toStartOf="@+id/gelNail"
+            app:layout_constraintStart_toEndOf="@+id/handCare"
+            app:layout_constraintTop_toTopOf="@+id/handCare" />
+
+        <Button
+            android:id="@+id/gelNail"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/gel_nail"
+            android:onClick="@{() -> scheduleAddViewModel.onGNClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckGN())}"
+            app:layout_constraintEnd_toStartOf="@+id/gelFoot"
+            app:layout_constraintStart_toEndOf="@+id/footCare"
+            app:layout_constraintTop_toTopOf="@+id/footCare" />
+
+        <Button
+            android:id="@+id/gelFoot"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/gel_foot"
+            android:onClick="@{() -> scheduleAddViewModel.onGFClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckGF())}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gelNail"
+            app:layout_constraintTop_toTopOf="@+id/gelNail" />
+
+        <Button
+            android:id="@+id/removeGel"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/remove_gel"
+            android:onClick="@{() -> scheduleAddViewModel.onRGClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckRG())}"
+            app:layout_constraintEnd_toStartOf="@+id/repair"
+            app:layout_constraintStart_toStartOf="@+id/handCare"
+            app:layout_constraintTop_toBottomOf="@+id/handCare" />
+
+        <Button
+            android:id="@+id/repair"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/repair"
+            android:onClick="@{() -> scheduleAddViewModel.onRClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckR())}"
+            app:layout_constraintEnd_toStartOf="@+id/hold"
+            app:layout_constraintStart_toEndOf="@+id/removeGel"
+            app:layout_constraintTop_toTopOf="@+id/removeGel" />
+
+        <Button
+            android:id="@+id/hold"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/hold"
+            android:onClick="@{() -> scheduleAddViewModel.onHClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckH())}"
+            app:layout_constraintEnd_toStartOf="@+id/etc"
+            app:layout_constraintStart_toEndOf="@+id/repair"
+            app:layout_constraintTop_toTopOf="@+id/repair" />
+
+        <Button
+            android:id="@+id/etc"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/content_btn"
+            android:stateListAnimator="@null"
+            android:text="@string/etc"
+            android:onClick="@{() -> scheduleAddViewModel.onEtcClick()}"
+            app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckEtc())}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/hold"
+            app:layout_constraintTop_toTopOf="@+id/hold" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -15,12 +15,17 @@ data class Schedule(
     var userId: Int,
     @ColumnInfo(name = "name")
     var name: String,
-    @ColumnInfo(name = "title")
-    var title: String,
-    @ColumnInfo(name = "description")
-    var description: String,
+    @ColumnInfo(name = "descriptions")
+    var descriptions: List<Description>,
     @ColumnInfo(name = "cal")
     var cal: Calendar?,
     @ColumnInfo(name = "date")
     var date: String
+):Serializable
+
+@Entity(tableName = "description")
+data class Description(
+    @PrimaryKey(autoGenerate = true)
+    val id:Int =0,
+    var description: String
 ):Serializable

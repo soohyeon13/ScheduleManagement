@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="scheduleAddViewModel"
             type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.ScheduleAddViewModel" />
@@ -13,173 +14,151 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout5"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userNameText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableStart="@drawable/ic_person_black_24dp"
-                android:hint="@string/person_select"
-                android:inputType="text" />
-
-            <TextView
-                android:id="@+id/numText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/button"
+        <TextView
+            android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/person_select"
-            android:onClick="@{() -> scheduleAddViewModel.onSelectPerson()}"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/input_name"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/userNameText"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout2"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNameText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+            android:layout_height="30dp"
+            android:background="@drawable/search_box_2"
+            android:paddingStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textName"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton4"
+            app:layout_constraintStart_toEndOf="@+id/textName"
+            app:layout_constraintTop_toTopOf="@+id/textName" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/titleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_edit_black_24dp"
-                android:hint="@string/title"
-                android:textColorHint="@color/colorBasic" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout3"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/dateSelect"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dateText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="date"
-                android:drawableStart="@drawable/ic_date_range_black_24dp"
-                android:hint="@string/date"
-                android:textColorHint="@color/colorBasic" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/dateSelect"
+        <ImageButton
+            android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="@string/date_select"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/background_transparent"
+            android:onClick="@{() -> scheduleAddViewModel.onSelectPerson()}"
+            android:src="@drawable/ic_search_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/userNameText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/userNameText" />
+
+        <TextView
+            android:id="@+id/textNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="@string/input_number"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textName"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userNumInputText"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/search_box"
+            android:paddingStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textNum"
+            app:layout_constraintEnd_toEndOf="@+id/imageButton4"
+            app:layout_constraintStart_toStartOf="@+id/userNameText"
+            app:layout_constraintTop_toTopOf="@+id/textNum" />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="@string/date"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textNum"
+            app:layout_constraintTop_toBottomOf="@+id/textNum" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dateInputText"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="@drawable/search_box_2"
+            android:paddingStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dateText"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton5"
+            app:layout_constraintStart_toStartOf="@+id/userNumInputText"
+            app:layout_constraintTop_toTopOf="@+id/dateText" />
+
+        <ImageButton
+            android:id="@+id/imageButton5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_transparent"
             android:onClick="@{() -> scheduleAddViewModel.onSelectDate()}"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout3" />
+            android:src="@drawable/ic_search_black_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/dateInputText"
+            app:layout_constraintEnd_toEndOf="@+id/imageButton4"
+            app:layout_constraintTop_toTopOf="@+id/dateInputText" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout4"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <TextView
+            android:id="@+id/contentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/content"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/dateText"
+            app:layout_constraintTop_toBottomOf="@+id/dateText" />
+
+        <include
+            android:id="@+id/contentLayout"
+            layout="@layout/content_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/contentText"
+            app:layout_constraintTop_toBottomOf="@+id/contentText"
+            app:scheduleAddViewModel="@{scheduleAddViewModel}" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/timeText"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/cancelBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="datetime"
-                android:drawableStart="@drawable/ic_access_time_black_24dp"
-                android:hint="@string/time"
-                android:textColorHint="@color/colorBasic"/>
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_gravity="right"
+                android:background="@drawable/custom_cancel_btn"
+                android:gravity="right|center"
+                android:stateListAnimator="@null"
+                android:onClick="@{()-> scheduleAddViewModel.onCancel()}"
+                android:paddingRight="40dp"
+                android:text="취소" />
 
-        <Button
-            android:id="@+id/timeSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/time_select"
-            android:onClick="@{() -> scheduleAddViewModel.onSelectTime()}"
-            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textInputLayout4"
-            app:layout_constraintTop_toTopOf="@+id/textInputLayout4" />
+            <Button
+                android:id="@+id/saveBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:background="@drawable/custom_btn"
+                android:onClick="@{()-> scheduleAddViewModel.onSave(userNameText.getText().toString(),userNumInputText.getText().toString(),dateInputText.getText().toString())}"
+                android:text="@string/save" />
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/scheduleSaveBtn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descriptionText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="text"
-                android:drawableStart="@drawable/ic_description_black_24dp"
-                android:hint="@string/description"
-                android:textColorHint="@color/colorBasic"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <Button
-            android:id="@+id/scheduleSaveBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/save"
-            android:onClick="@{()-> scheduleAddViewModel.onSave(userNameText.getText().toString(),numText.getText().toString(),titleText.getText().toString(),dateText.getText().toString(),timeText.getText().toString(),descriptionText.getText().toString())}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/scheduleCancelBtn"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-        <Button
-            android:id="@+id/scheduleCancelBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/cancel"
-            android:onClick="@{()-> scheduleAddViewModel.onCancel()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/scheduleSaveBtn" />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

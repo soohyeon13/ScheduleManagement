@@ -60,7 +60,6 @@ class TodoListBottomFragment : BottomSheetDialogFragment() {
                 val bundle = Bundle()
                 bundle.putSerializable("schedule",it)
                 findNavController().navigate(R.id.action_todoFragment_to_scheduleAddFragment,bundle)
-                Log.d("singleLiveEvent test",it.name)
             })
             cancelClickEvent.observe(this@TodoListBottomFragment, Observer {
                 this@TodoListBottomFragment.dismiss()
