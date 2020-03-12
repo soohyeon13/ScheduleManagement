@@ -42,9 +42,9 @@
         <ImageButton
             android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="14dp"
-            android:background="@drawable/background_transparent"
+            android:background="@color/colorBtn"
             android:onClick="@{() -> scheduleAddViewModel.onSelectPerson()}"
             android:src="@drawable/ic_search_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/userNameText"
@@ -99,8 +99,8 @@
         <ImageButton
             android:id="@+id/imageButton5"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_transparent"
+            android:layout_height="0dp"
+            android:background="@color/colorBtn"
             android:onClick="@{() -> scheduleAddViewModel.onSelectDate()}"
             android:src="@drawable/ic_search_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/dateInputText"
@@ -130,7 +130,32 @@
             app:layout_constraintTop_toBottomOf="@+id/contentText"
             app:scheduleAddViewModel="@{scheduleAddViewModel}" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="8dp"
+            visibleContent="@{scheduleAddViewModel.isCheckEtc()}"
+            android:background="@drawable/search_box"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etcText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_transparent"
+                android:inputType="textMultiLine"
+                android:layout_gravity="start|top"
+                android:scrollHorizontally="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -143,20 +168,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@drawable/custom_cancel_btn"
+                android:textColor="@color/colorWhite"
                 android:gravity="right|center"
-                android:stateListAnimator="@null"
                 android:onClick="@{()-> scheduleAddViewModel.onCancel()}"
                 android:paddingRight="40dp"
+                android:stateListAnimator="@null"
                 android:text="취소" />
 
             <Button
                 android:id="@+id/saveBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#fff"
                 android:background="@drawable/custom_btn"
-                android:onClick="@{()-> scheduleAddViewModel.onSave(userNameText.getText().toString(),userNumInputText.getText().toString(),dateInputText.getText().toString())}"
-                android:text="@string/save" />
+                android:onClick="@{()-> scheduleAddViewModel.onSave(userNameText.getText().toString(),userNumInputText.getText().toString(),dateInputText.getText().toString(),etcText.getText().toString())}"
+                android:text="@string/save"
+                android:textColor="#fff" />
 
         </FrameLayout>
 

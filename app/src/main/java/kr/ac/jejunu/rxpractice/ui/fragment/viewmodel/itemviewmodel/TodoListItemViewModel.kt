@@ -23,14 +23,28 @@ class TodoListItemViewModel : BaseItemViewModel<Schedule>() {
     private var _descriptions = MutableLiveData<String>()
     val descriptions: LiveData<String>
         get() = _descriptions
+    private var _etcDes = MutableLiveData<String>()
+    val etcDes : LiveData<String>
+        get() = _etcDes
+    private var _checkEtcContent = MutableLiveData<Boolean>()
+    val isCheckEtcContent : LiveData<Boolean>
+        get() = _checkEtcContent
+
+    init {
+        _checkEtcContent.value = false
+    }
 
     override fun bind(data: Schedule) {
+        if (!data.etcDes.isNullOrEmpty()) {
+            _checkEtcContent.value =true
+        }
         val day = convertDay(data.cal)
         val des = convertDescription(data.descriptions)
         schedule.value = data
         _name.value = data.name
         _date.value = day
         _descriptions.value = des
+        if (_checkEtcContent.value!!) _etcDes.value = data.etcDes
     }
 
     @SuppressLint("SimpleDateFormat")

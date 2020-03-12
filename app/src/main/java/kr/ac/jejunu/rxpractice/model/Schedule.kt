@@ -20,7 +20,9 @@ data class Schedule(
     @ColumnInfo(name = "cal")
     var cal: Calendar?,
     @ColumnInfo(name = "date")
-    var date: String
+    var date: String,
+    @ColumnInfo(name="etc_des")
+    var etcDes : String? = ""
 ):Serializable
 
 @Entity(tableName = "description")

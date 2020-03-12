@@ -41,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         supportActionBar!!.apply {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(false)
+            setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp)
         }
 //        setupActionBarWithNavController(host.navController,appBarConfiguration)
     }

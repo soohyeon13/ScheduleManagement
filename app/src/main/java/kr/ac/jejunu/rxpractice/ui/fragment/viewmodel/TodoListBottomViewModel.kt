@@ -3,6 +3,8 @@ package kr.ac.jejunu.rxpractice.ui.fragment.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.ui.adapter.TodoListAdapter

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.itemviewmodel.TodoListItemViewModel" />
@@ -14,64 +15,135 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:elevation="10dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="5dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@{viewModel.name}"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/imageButton3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contractContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@{viewModel.date}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@{viewModel.descriptions}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/background_transparent"
-                android:src="@drawable/ic_cancel_black_24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/expandContainer"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/checkMember"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/member_box"
+                    android:text="@string/member"
+                    android:textSize="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="117dp"
+                    android:text="@{viewModel.name}"
+                    app:layout_constraintBottom_toBottomOf="@+id/checkMember"
+                    app:layout_constraintEnd_toStartOf="@+id/userTime"
+                    app:layout_constraintStart_toEndOf="@+id/checkMember"
+                    app:layout_constraintTop_toTopOf="@+id/checkMember" />
+
+                <TextView
+                    android:id="@+id/userTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.date}"
+                    app:layout_constraintBottom_toBottomOf="@+id/userName"
+                    app:layout_constraintEnd_toStartOf="@+id/expandState"
+                    app:layout_constraintStart_toEndOf="@+id/userName"
+                    app:layout_constraintTop_toTopOf="@+id/userName" />
+
+                <ImageView
+                    android:id="@+id/expandState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/expandContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/background_transparent"
-                android:src="@drawable/ic_refresh_black_24dp"
-                app:layout_constraintEnd_toStartOf="@+id/imageButton2"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/contentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@{viewModel.descriptions}"
+                    app:layout_constraintStart_toStartOf="@+id/textView12"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    visibleContent="@{viewModel.isCheckEtcContent()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@{viewModel.etcDes}"
+                    app:layout_constraintStart_toStartOf="@+id/contentText"
+                    app:layout_constraintTop_toBottomOf="@+id/contentText" />
+
+                <Button
+                    android:id="@+id/moneyBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/money_box"
+                    android:text="@string/money"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+                <Button
+                    android:id="@+id/updateContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_transparent"
+                    android:text="@string/update_content"
+                    app:layout_constraintEnd_toStartOf="@+id/cancelContent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <Button
+                    android:id="@+id/cancelContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/background_transparent"
+                    android:text="@string/cancel_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/updateContent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

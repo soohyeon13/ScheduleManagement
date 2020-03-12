@@ -8,7 +8,7 @@ import kr.ac.jejunu.rxpractice.model.Schedule
 import kr.ac.jejunu.rxpractice.model.User
 import kr.ac.jejunu.rxpractice.util.Converters
 
-@Database(entities = [User::class, Schedule::class, Sales::class,Description::class], version = 15)
+@Database(entities = [User::class, Schedule::class, Sales::class,Description::class], version = 16)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao

@@ -1,8 +1,10 @@
 package kr.ac.jejunu.rxpractice.util
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,12 +16,15 @@ fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
 }
 
 @BindingAdapter("backgroundVisibleOrGone")
-fun setBackgroundVisibleOrGone(view:View,visible:Boolean) {
+fun setBackgroundVisibleOrGone(btn:Button,visible:Boolean) {
     if (visible) {
-        Log.d("test1","test")
-        view.setBackgroundResource(R.drawable.check_box)
+        btn.setBackgroundResource(R.drawable.check_box)
     }else {
-        Log.d("test2","test")
-        view.setBackgroundResource(R.drawable.content_btn)
+        btn.setBackgroundResource(R.drawable.content_btn)
     }
+}
+
+@BindingAdapter("visibleContent")
+fun setVisibleContent(view:View,visible: Boolean) {
+    view.visibility = if (visible) View.VISIBLE else View.GONE
 }

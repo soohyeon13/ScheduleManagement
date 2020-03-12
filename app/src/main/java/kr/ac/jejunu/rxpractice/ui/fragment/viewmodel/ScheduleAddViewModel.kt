@@ -110,10 +110,8 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
         if (check) descriptions.add(Description(description = title)) else descriptions.remove(
             Description(description = title)
         )
-        Log.d("test", descriptions.toString())
-    }
+    } //리펙토링 하고싶다... 방법을 잘 모르겠음 공부 필요...
 
-    //리펙토링 하고싶다... 방법을 잘 모르겠음 공부 필요...
     fun onSelectPerson() {
         clickPersonEvent.call()
     }
@@ -125,7 +123,8 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
     fun onSave(
         userName: String,
         number: String,
-        date: String
+        date: String,
+        etcDes : String?
     ) {
         if (userName.isEmpty() || date.isEmpty()) {
             toastShow.call()
@@ -138,7 +137,8 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
                 name = userName,
                 descriptions = descriptions,
                 cal = c,
-                date = saveDate[0]
+                date = saveDate[0],
+                etcDes = etcDes
             )
             CompositeDisposable().add(
                 repository.insertSchedule(schedule)
@@ -177,7 +177,6 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
     }
 
     fun onCancel() {
-        Log.d("test", "test cancel")
         clickCancel.call()
     }
 }

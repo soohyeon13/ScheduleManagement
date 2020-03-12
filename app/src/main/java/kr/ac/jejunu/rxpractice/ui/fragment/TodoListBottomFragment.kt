@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.ac.jejunu.rxpractice.BR
 import kr.ac.jejunu.rxpractice.R
@@ -21,8 +24,11 @@ import kr.ac.jejunu.rxpractice.util.OnItemClickListener
 class TodoListBottomFragment : BottomSheetDialogFragment() {
     private lateinit var viewModel: TodoListBottomViewModel
     private lateinit var binding: TodoListBottomFragmentBinding
+    private lateinit var controller: LayoutAnimationController
     private val DATA = "DATA"
-
+    private val loadingDuration: Long
+        get() = (600/ animationPlaybackSpeed).toLong()
+    private var animationPlaybackSpeed: Double = 0.8
     companion object {
         fun newInstance(date: String): TodoListBottomFragment =
             TodoListBottomFragment().apply {
@@ -53,7 +59,9 @@ class TodoListBottomFragment : BottomSheetDialogFragment() {
     private fun initView() {
         binding.todoRecycler.apply {
             layoutManager = LinearLayoutManager(this@TodoListBottomFragment.requireContext())
+            runAnimation(this)
         }
+        updateRecyclerViewAnimDuration()
         with(viewModel) {
             this.getScheduleData(arguments?.get(DATA).toString())
             clickEvent.observe(this@TodoListBottomFragment, Observer {
@@ -65,5 +73,16 @@ class TodoListBottomFragment : BottomSheetDialogFragment() {
                 this@TodoListBottomFragment.dismiss()
             })
         }
+    }
+
+    private fun updateRecyclerViewAnimDuration() = binding.todoRecycler.itemAnimator?.run {
+        removeDuration = loadingDuration * 60 / 100
+        addDuration = loadingDuration
+    }
+
+    private fun runAnimation(recyclerview : RecyclerView) {
+        controller = AnimationUtils.loadLayoutAnimation(this@TodoListBottomFragment.requireContext(),R.anim.layout_animation)
+        recyclerview.layoutAnimation = controller
+        recyclerview.scheduleLayoutAnimation()
     }
 }

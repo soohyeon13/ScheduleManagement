@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorBasic</item>
         <item name="android:datePickerStyle">@style/SpinnerDatePicker</item>
         <item name="android:timePickerStyle">@style/SpinnerTimePicker</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back_black_24dp</item>
     </style>
 
     <style name="TextInputEditTextStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -31,5 +35,15 @@
     </style>
     <style name="SpinnerTimePicker" parent="android:Widget.Material.TimePicker">
         <item name="android:timePickerMode">spinner</item>
+    </style>
+    
+    <style name="TextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/font</item>
+    </style>
+    <style name="ButtonStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:fontFamily">@font/font</item>
+    </style>
+    <style name="EditTextStyle" parent="@android:style/Widget.DeviceDefault.EditText">
+        <item name="android:fontFamily">@font/font</item>
     </style>
 </resources>

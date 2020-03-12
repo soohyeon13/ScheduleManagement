@@ -11,6 +11,7 @@ import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.utils.EntryXComparator
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.sales_total_fragment.view.*
 import kr.ac.jejunu.rxpractice.BR
@@ -20,6 +21,8 @@ import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.databinding.SalesTotalFragmentBinding
 import kr.ac.jejunu.rxpractice.model.Sales
 import kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.tabviewmodel.SalesTotalViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SalesTotalFragment :
     BaseFragment<SalesTotalFragmentBinding, SalesTotalViewModel>(R.layout.sales_total_fragment) {
@@ -58,9 +61,11 @@ class SalesTotalFragment :
             textSize = 10f
             setDrawGridLines(false)
             valueFormatter = IndexAxisValueFormatter(xAxisValue)
-            isGranularityEnabled = false
+            setLabelCount(12,true)
+            granularity =1f
         }
         binding.lineChart.apply {
+            description =null
             axisRight.isEnabled = false
             axisLeft.axisMaximum = 50000f
             legend.apply {
@@ -72,22 +77,26 @@ class SalesTotalFragment :
             }
         }
         val lineData = LineData(lineDataSet)
-        binding.lineChart.invalidate()
         binding.lineChart.data = lineData
     }
 
     private fun getData() {
         for (i in 0 until xAxisValue.size) {
             var money: Int = 0
+            val index = i.toFloat()
+            Log.d("test",index.toString())
             val monthData = repository.getMoney(xAxisValue[i])
-            if (!monthData.isEmpty()) {
-                for (j in 0 until monthData.size) {
-                    money += monthData.get(j).money
+            if (monthData.isNotEmpty()) {
+                for (j in monthData.indices) {
+                    money += monthData[j].money
                 }
-                val index = (i+1).toFloat()
+
                 xAxisData.add(Entry(index,money.toFloat()))
+            } else {
+                xAxisData.add(Entry(index,0f))
             }
         }
+        Collections.sort(xAxisData,EntryXComparator())
     }
 }
 

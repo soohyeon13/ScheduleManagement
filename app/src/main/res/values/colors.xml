@@ -5,6 +5,13 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorBasic">#bbded6</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
     <color name="colorStart">#A64896</color>
     <color name="colorEnd">#552B8C</color>
+    <color name="colorBtn">#E0CDE3</color>
+    <color name="colorCheckBtn">#8B237B</color>
+    <color name="colorMember">#D81B60</color>
+    <color name="colorNonMember">#EFCEC5</color>
+    <color name="colorCard">#97D5E0</color>
+    <color name="colorCash">#88B14B</color>
 </resources>
