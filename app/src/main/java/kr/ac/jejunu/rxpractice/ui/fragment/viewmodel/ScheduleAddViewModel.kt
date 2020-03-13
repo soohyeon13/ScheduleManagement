@@ -3,11 +3,16 @@ package kr.ac.jejunu.rxpractice.ui.fragment.viewmodel
 import android.annotation.SuppressLint
 import android.app.Application
 import android.util.Log
+import android.view.View
+import androidx.databinding.InverseMethod
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.add_schedule_fragment.view.*
+import kotlinx.android.synthetic.main.content_layout.view.*
+import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.base.BaseViewModel
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.model.Description
@@ -23,6 +28,8 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
     val clickSave = SingleLiveEvent<Unit>()
     val clickCancel = SingleLiveEvent<Unit>()
     val toastShow = SingleLiveEvent<Unit>()
+    val phoneNum = MutableLiveData<String>()
+
     private var descriptions = mutableListOf<Description>()
     private var _isCheckHand = MutableLiveData<Boolean>()
     val isCheckHand: LiveData<Boolean>
@@ -65,52 +72,11 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
         _isCheckEtc.value = false
     }
 
-    //여기 부분 너무 하드코딩 느낌...
-    fun onHandClick() {
-        _isCheckHand.value = !_isCheckHand.value!!
-        isCheck(_isCheckHand.value!!, "손케어")
-    }
-
-    fun onFootClick() {
-        _isCheckFoot.value = !_isCheckFoot.value!!
-        isCheck(isCheckFoot.value!!, "발케어")
-    }
-
-    fun onGNClick() {
-        _isCheckGN.value = !_isCheckGN.value!!
-        isCheck(_isCheckGN.value!!, "젤네일")
-    }
-
-    fun onGFClick() {
-        _isCheckGF.value = !_isCheckGF.value!!
-        isCheck(_isCheckGF.value!!, "젤페디")
-    }
-
-    fun onRGClick() {
-        _isCheckRG.value = !_isCheckRG.value!!
-        isCheck(_isCheckRG.value!!, "젤 제거")
-    }
-
-    fun onRClick() {
-        _isCheckR.value = !_isCheckR.value!!
-        isCheck(_isCheckR.value!!, "보수")
-    }
-
-    fun onHClick() {
-        _isCheckH.value = !_isCheckH.value!!
-        isCheck(_isCheckH.value!!, "홀드핀칭")
-    }
-
-    fun onEtcClick() {
-        _isCheckEtc.value = !_isCheckEtc.value!!
-        isCheck(_isCheckEtc.value!!, "기타")
-    }
-
     private fun isCheck(check: Boolean, title: String) {
         if (check) descriptions.add(Description(description = title)) else descriptions.remove(
             Description(description = title)
         )
-    } //리펙토링 하고싶다... 방법을 잘 모르겠음 공부 필요...
+    }
 
     fun onSelectPerson() {
         clickPersonEvent.call()
@@ -126,6 +92,7 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
         date: String,
         etcDes : String?
     ) {
+        Log.d("test",phoneNum.value.toString())
         if (userName.isEmpty() || date.isEmpty()) {
             toastShow.call()
         } else {
@@ -174,6 +141,43 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
                 )
         }
         return userId
+    }
+
+    fun isCheckBtn(view:View) {
+        when(view.id) {
+            R.id.handCare -> {
+                _isCheckHand.value = !_isCheckHand.value!!
+                isCheck(_isCheckHand.value!!, view.handCare.text.toString())
+            }
+            R.id.footCare -> {
+                _isCheckFoot.value = !_isCheckFoot.value!!
+                isCheck(_isCheckFoot.value!!, view.footCare.text.toString())
+            }
+            R.id.gelNail -> {
+                _isCheckGN.value = !_isCheckGN.value!!
+                isCheck(_isCheckGN.value!!, view.gelNail.text.toString())
+            }
+            R.id.gelFoot -> {
+                _isCheckGF.value = !_isCheckGF.value!!
+                isCheck(_isCheckGF.value!!, view.gelFoot.text.toString())
+            }
+            R.id.removeGel -> {
+                _isCheckRG.value = !_isCheckRG.value!!
+                isCheck(_isCheckRG.value!!, view.removeGel.text.toString())
+            }
+            R.id.repair -> {
+                _isCheckR.value = !_isCheckR.value!!
+                isCheck(_isCheckR.value!!, view.repair.text.toString())
+            }
+            R.id.hold -> {
+                _isCheckH.value = !_isCheckH.value!!
+                isCheck(_isCheckH.value!!, view.hold.text.toString())
+            }
+            R.id.etc -> {
+                _isCheckEtc.value = !_isCheckEtc.value!!
+                isCheck(_isCheckEtc.value!!, view.etc.text.toString())
+            }
+        }
     }
 
     fun onCancel() {

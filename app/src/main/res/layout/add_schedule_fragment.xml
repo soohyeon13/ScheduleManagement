@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="scheduleAddViewModel"
             type="kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.ScheduleAddViewModel" />
@@ -68,6 +68,7 @@
             android:layout_height="30dp"
             android:background="@drawable/search_box"
             android:paddingStart="8dp"
+            android:text="@={scheduleAddViewModel.phoneNum}"
             app:layout_constraintBottom_toBottomOf="@+id/textNum"
             app:layout_constraintEnd_toEndOf="@+id/imageButton4"
             app:layout_constraintStart_toStartOf="@+id/userNameText"

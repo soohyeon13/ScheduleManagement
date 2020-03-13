@@ -1,14 +1,11 @@
 package kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.itemviewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.ac.jejunu.rxpractice.base.BaseItemViewModel
 import kr.ac.jejunu.rxpractice.model.Description
 import kr.ac.jejunu.rxpractice.model.Schedule
-import kr.ac.jejunu.rxpractice.util.SingleLiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -56,9 +53,7 @@ class TodoListItemViewModel : BaseItemViewModel<Schedule>() {
 
     private fun convertDescription(list: List<Description>): String {
         var preStr = ""
-        for (str in list) {
-            preStr += "${str.description} "
-        }
-        return preStr.trim().replace(' ', ',')
+        for (str in list) { preStr += "-${str.description} \n" }
+        return preStr
     }
 }

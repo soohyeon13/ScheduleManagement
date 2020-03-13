@@ -40,6 +40,9 @@ class TodoListAdapter(private val itemClickListener : OnItemClickListener<Schedu
         fun onBind(schedule: Schedule,itemClickListener:OnItemClickListener<Schedule>) {
             viewModel.bind(schedule)
             binding.viewModel = viewModel
+            binding.updateContent.setOnClickListener {
+                itemClickListener.onItemClick(data = schedule)
+            }
         }
     }
 
