@@ -13,6 +13,8 @@ data class Schedule(
     val id: Int = 0,
     @ColumnInfo(name = "user_id")
     var userId: Int,
+    @ColumnInfo(name = "member")
+    var userMember : String = "비회원",
     @ColumnInfo(name = "name")
     var name: String,
     @ColumnInfo(name = "descriptions")
@@ -22,7 +24,9 @@ data class Schedule(
     @ColumnInfo(name = "date")
     var date: String,
     @ColumnInfo(name="etc_des")
-    var etcDes : String? = ""
+    var etcDes : String? = "",
+    @ColumnInfo(name="schedule_sales")
+    var scheduleSales : Int =0
 ):Serializable
 
 @Entity(tableName = "description")

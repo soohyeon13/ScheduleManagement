@@ -1,6 +1,7 @@
 package kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.itemviewmodel
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kr.ac.jejunu.rxpractice.base.BaseItemViewModel
@@ -21,11 +22,17 @@ class TodoListItemViewModel : BaseItemViewModel<Schedule>() {
     val descriptions: LiveData<String>
         get() = _descriptions
     private var _etcDes = MutableLiveData<String>()
-    val etcDes : LiveData<String>
+    val etcDes: LiveData<String>
         get() = _etcDes
     private var _checkEtcContent = MutableLiveData<Boolean>()
-    val isCheckEtcContent : LiveData<Boolean>
+    val isCheckEtcContent: LiveData<Boolean>
         get() = _checkEtcContent
+    private var _checkMember = MutableLiveData<String>()
+    val checkMember: LiveData<String>
+        get() = _checkMember
+    private var _isCheckMembers = MutableLiveData<Boolean>()
+    val isCheckMembers: LiveData<Boolean>
+        get() = _isCheckMembers
 
     init {
         _checkEtcContent.value = false
@@ -33,7 +40,7 @@ class TodoListItemViewModel : BaseItemViewModel<Schedule>() {
 
     override fun bind(data: Schedule) {
         if (!data.etcDes.isNullOrEmpty()) {
-            _checkEtcContent.value =true
+            _checkEtcContent.value = true
         }
         val day = convertDay(data.cal)
         val des = convertDescription(data.descriptions)
@@ -41,6 +48,8 @@ class TodoListItemViewModel : BaseItemViewModel<Schedule>() {
         _name.value = data.name
         _date.value = day
         _descriptions.value = des
+        _checkMember.value = data.userMember.substring(0..0)
+        _isCheckMembers.value = _checkMember.value.equals("회")
         if (_checkEtcContent.value!!) _etcDes.value = data.etcDes
     }
 
@@ -53,7 +62,9 @@ class TodoListItemViewModel : BaseItemViewModel<Schedule>() {
 
     private fun convertDescription(list: List<Description>): String {
         var preStr = ""
-        for (str in list) { preStr += "-${str.description} \n" }
+        for (str in list) {
+            preStr += "-${str.description} \n"
+        }
         return preStr
     }
 }

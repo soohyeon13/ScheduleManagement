@@ -28,7 +28,6 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
     val clickSave = SingleLiveEvent<Unit>()
     val clickCancel = SingleLiveEvent<Unit>()
     val toastShow = SingleLiveEvent<Unit>()
-    val phoneNum = MutableLiveData<String>()
 
     private var descriptions = mutableListOf<Description>()
     private var _isCheckHand = MutableLiveData<Boolean>()
@@ -92,15 +91,19 @@ class ScheduleAddViewModel(application: Application) : BaseViewModel<List<Schedu
         date: String,
         etcDes : String?
     ) {
-        Log.d("test",phoneNum.value.toString())
         if (userName.isEmpty() || date.isEmpty()) {
             toastShow.call()
         } else {
             val saveDate = date.split(" ".toRegex())
+            var member ="비회원"
             userId = checkUser(userName, number)
+            if (userId != 0) {
+               member = "회원"
+            }
             val c = dateToCalendar(date)
             val schedule = Schedule(
                 userId = userId,
+                userMember = member,
                 name = userName,
                 descriptions = descriptions,
                 cal = c,

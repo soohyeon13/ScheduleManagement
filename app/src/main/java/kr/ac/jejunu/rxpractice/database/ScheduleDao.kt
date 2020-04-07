@@ -10,18 +10,6 @@ import java.util.*
 
 @Dao
 interface ScheduleDao {
-    @Query("SELECT * FROM schedule WHERE date LIKE :today")
-    fun todayTodo(today : String) : List<Schedule>
-
-    @Query("SELECT cal FROM schedule")
-    fun getAllDay(): List<Calendar>
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun todoInsert(vararg schedule: Schedule) : Completable
-
-    @Delete
-    fun todoDelete(schedule: Schedule) : Completable
-
-    @Update
-    fun  todoUpdate(vararg schedule: Schedule) : Completable
+    @Query("SELECT ")
 
 }

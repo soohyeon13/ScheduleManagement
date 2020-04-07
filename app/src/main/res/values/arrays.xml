@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="member_sales_list">
+        <item>손 케어(회원) 15,000원</item>
+        <item>발 케어(회원) 25,000원</item>
+        <item>젤 네일(회원) 40,000원</item>
+        <item>젤 페디(회원) 50,000원</item>
+        <item>맨즈 손(회원) 20,000원</item>
+        <item>맨즈 발(회원) 30,000원</item>
+        <item>홀드 핀칭 150,000원</item>
+        <item>기타</item>
+        <item>할인</item>
+    </string-array>
+
+    <string-array name="non_member_sales_list">
+        <item>손 케어(비회원) 20,000원</item>
+        <item>발 케어(비회원) 30,000원</item>
+        <item>젤 네일(비회원) 50,000원</item>
+        <item>젤 페디(비회원) 60,000원</item>
+        <item>맨즈 손(비회원) 25,000원</item>
+        <item>맨즈 발(비회원)\n35,000원</item>
+        <item>홀드 핀칭 150,000원</item>
+        <item>기타</item>
+        <item>할인</item>
+    </string-array>
+
+    <string-array name="discount">
+        <item>할인</item>
+        <item>기타</item>
+    </string-array>
+
+    <string-array name="member_list">
+        <item>회원</item>
+        <item>비회원</item>
+    </string-array>
+</resources>

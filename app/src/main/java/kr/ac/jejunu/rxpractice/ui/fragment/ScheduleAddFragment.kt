@@ -7,6 +7,9 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager

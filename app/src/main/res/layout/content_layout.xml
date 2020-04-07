@@ -38,6 +38,7 @@
             android:background="@drawable/content_btn"
             android:stateListAnimator="@null"
             android:text="@string/foot_care"
+            android:textSize="15dp"
             android:onClick="@{(view) -> scheduleAddViewModel.isCheckBtn(view)}"
             app:backgroundVisibleOrGone="@{safeUnbox(scheduleAddViewModel.isCheckFoot())}"
             app:layout_constraintEnd_toStartOf="@+id/gelNail"

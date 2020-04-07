@@ -35,12 +35,12 @@
 
                 <Button
                     android:id="@+id/checkMember"
+                    backDrawable="@{viewModel.isCheckMembers()}"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginStart="8dp"
-                    android:background="@drawable/member_box"
-                    android:text="@string/member"
-                    android:textSize="10dp"
+                    android:text="@{viewModel.isCheckMembers ? @string/member : @string/non_member}"
+                    android:textColor="@color/colorWhite"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

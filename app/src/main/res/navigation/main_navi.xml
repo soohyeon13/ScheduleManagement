@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/todoFragment"
-        android:name="kr.ac.jejunu.rxpractice.ui.fragment.TodoFragment"
+        android:name="kr.ac.jejunu.rxpractice.ui.todo.TodoFragment"
         tools:layout="@layout/todo_fragment">
         <action
             android:id="@+id/action_todoFragment_to_scheduleAddFragment"

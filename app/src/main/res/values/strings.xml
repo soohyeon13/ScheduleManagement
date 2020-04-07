@@ -15,6 +15,7 @@
     <string name="transition_add_person">add person</string>
     <string name="no_schedule">일정이 없습니다.</string>
     <string name="complete">완료</string>
+    <string name="check">확인</string>
     <string name="person_select">고객 선택</string>
     <string name="input_money">금액</string>
     <string name="content">예약내용</string>
@@ -29,8 +30,13 @@
     <string name="today_sales">오늘 매출</string>
     <string name="member">회</string>
     <string name="non_member">비</string>
+    <string name="day_sales">일일매출</string>
+    <string name="month_sales">한달매출</string>
+    <string name="weeks_sales">주간매출</string>
     <string name="card">카</string>
+    <string name="card_sales">카드</string>
     <string name="cash">현</string>
+    <string name="cash_sales">현금</string>
     <string name="money">\uFFE6</string>
     <string name="update_content">수정</string>
     <string name="cancel_content">삭제</string>

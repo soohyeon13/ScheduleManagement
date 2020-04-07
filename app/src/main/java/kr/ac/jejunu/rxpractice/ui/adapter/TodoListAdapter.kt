@@ -43,6 +43,12 @@ class TodoListAdapter(private val itemClickListener : OnItemClickListener<Schedu
             binding.updateContent.setOnClickListener {
                 itemClickListener.onItemClick(data = schedule)
             }
+            binding.moneyBtn.setOnClickListener {
+                itemClickListener.onItemMoneyClick(data = schedule)
+            }
+            binding.cancelContent.setOnClickListener {
+                itemClickListener.onItemDelete(schedule)
+            }
         }
     }
 

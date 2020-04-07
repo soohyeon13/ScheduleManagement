@@ -1,20 +1,15 @@
 package kr.ac.jejunu.rxpractice.ui.activity
 
-import android.util.Log
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.ac.jejunu.rxpractice.BR
 import kr.ac.jejunu.rxpractice.R
-import kr.ac.jejunu.rxpractice.base.BaseActivity
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 import kr.ac.jejunu.rxpractice.databinding.SearchActivityBinding
 import kr.ac.jejunu.rxpractice.ui.adapter.SearchAdapter
 import kr.ac.jejunu.rxpractice.ui.fragment.viewmodel.SearchViewModel
-import java.util.*
 
 class SearchActivity : BaseActivity<SearchActivityBinding,SearchViewModel>(R.layout.search_activity),SearchView.OnQueryTextListener {
     private lateinit var searchAdapter : SearchAdapter

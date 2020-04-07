@@ -14,50 +14,11 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kr.ac.jejunu.rxpractice.database.RoomRepository
 
-abstract class BaseViewModel<D> protected constructor(application: Application)  : AndroidViewModel(application){
+abstract class BaseViewModel : ViewModel(){
     private val compositeDisposable : CompositeDisposable = CompositeDisposable()
-    private val roomRepository: RoomRepository = RoomRepository(application)
 
-    val onErrorEvent : MutableLiveData<Throwable> = MutableLiveData()
-    val isLoading : MutableLiveData<Boolean> = MutableLiveData()
-
-    fun addDisposable(single:Single<*>,observer:DisposableSingleObserver<*>) {
-        compositeDisposable.add(single.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(observer as SingleObserver<Any>)as Disposable)
-    }
-
-    val baseObserver : DisposableSingleObserver<String>
-        get() = object : DisposableSingleObserver<String>() {
-            override fun onSuccess(t: String) {
-                onRetrieveBaseSuccess(t)
-                isLoading.value = false
-            }
-
-            override fun onError(e: Throwable) {
-                onErrorEvent.value = e
-                isLoading.value = false
-            }
-
-        }
-
-    val dataObserver : DisposableSingleObserver<D>
-        get() = object : DisposableSingleObserver<D>() {
-            override fun onSuccess(t: D) {
-                onRetrieveDataSuccess(t)
-                isLoading.value = false
-            }
-
-            override fun onError(e: Throwable) {
-                onErrorEvent.value = e
-                isLoading.value = false
-            }
-        }
-
-    protected open fun onRetrieveDataSuccess(t: D) {
-    }
-
-    protected open fun onRetrieveBaseSuccess(t: String) {
+    fun addDisposable(disposable: CompositeDisposable) {
+        compositeDisposable.add(disposable)
     }
 
     override fun onCleared() {
