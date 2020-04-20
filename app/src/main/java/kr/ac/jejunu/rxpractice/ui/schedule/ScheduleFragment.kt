@@ -1,19 +1,20 @@
 package kr.ac.jejunu.rxpractice.ui.schedule
 
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ScrollView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.base.BaseFragment
+import kr.ac.jejunu.rxpractice.data.response.Schedule
 import kr.ac.jejunu.rxpractice.databinding.FragmentScheduleBinding
 import kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.ScheduleViewModel
 import org.koin.android.ext.android.inject
@@ -26,7 +27,10 @@ class ScheduleFragment
     companion object {
         private val TAG = "ScheduleFragment"
     }
+    private val todayEndFormat = arrayOf("년","월","일")
+    private val baseFormat = SimpleDateFormat("yyyy-MM-dd")
     private var isOpen = false
+    private var isLoad = false
     private val viewModel: ScheduleViewModel by inject()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,23 +40,23 @@ class ScheduleFragment
     }
 
     private fun initView() {
+        viewModel.getDaySchedule(selectDay(Calendar.getInstance())!!)
+        binding.timeTable.todayText.text = getToday(Calendar.getInstance().time)
+        viewModel.getMonthSchedule()
         with(binding.calendar) {
             setOnDayClickListener(object :OnDayClickListener {
-                @SuppressLint("SetTextI18n", "SimpleDateFormat")
                 override fun onDayClick(eventDay: EventDay) {
-                    binding.scrollView.apply {
-                        requestChildFocus(binding.childView,binding.timeTable.timeTableContainer)
-                        smoothScrollToView(binding.timeTable.timeTableContainer)
-                    }
-                    val simple = SimpleDateFormat("yyyy-MM-dd")
-                    val str = "${eventDay.calendar.get(Calendar.YEAR)}-" +
-                            "${eventDay.calendar.get(Calendar.MONTH)+1}-" +
-                            "${eventDay.calendar.get(Calendar.DAY_OF_MONTH)}"
-                    val date : Date = simple.parse(str)
-                    viewModel.getDaySchedule(date)
+                    viewModel.getDaySchedule(selectDay(eventDay.calendar)!!)
                 }
             })
         }
+    }
+    private fun selectDay(select : Calendar) : Date? {
+        val year = select.get(Calendar.YEAR)
+        val month = select.get(Calendar.MONTH)+1
+        val day = select.get(Calendar.DAY_OF_MONTH)
+        val convertDay = "$year-$month-$day"
+        return baseFormat.parse(convertDay)
     }
 
     private fun observe() {
@@ -68,12 +72,31 @@ class ScheduleFragment
                 binding.calendar.setEvents(eventDays)
             })
             dayScheduleLiveData.observe(viewLifecycleOwner, Observer {schedule ->
-                schedule.forEach {
-                    Log.d(TAG,"time ${it.time}")
-                    Log.d(TAG,"date ${it.date}")
-                }
+                getTodayItems(schedule)
             })
         }
+    }
+    private fun getTodayItems(schedule: List<Schedule>) {
+        if (schedule.isEmpty()) {
+            Toast.makeText(requireContext(),"일정이 없습니다.",Toast.LENGTH_SHORT).show()
+        }else {
+            binding.timeTable.todayText.text = getToday(schedule.first().date)
+            if (isLoad) {
+                binding.scrollView.apply {
+                    requestChildFocus(binding.childView,binding.timeTable.timeTableContainer)
+                    smoothScrollToView(binding.timeTable.timeTableContainer)
+                }
+            }
+        }
+        isLoad = true
+    }
+    private fun getToday(date : Date) : String {
+        val todayFrontFormat = baseFormat.format(date).split("-")
+        var today = StringBuilder()
+        for (i in todayFrontFormat.indices) {
+            today.append("${todayFrontFormat[i]} ${todayEndFormat[i]}")
+        }
+        return today.toString()
     }
 
     private fun animation() {

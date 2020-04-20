@@ -22,14 +22,15 @@ class ScheduleViewModel(
     val dayScheduleLiveData : LiveData<List<Schedule>> =
         repository.loadSchedule().toFlowable(BackpressureStrategy.BUFFER).toLiveData()
     init {
-        getMonthSchedule()
+        Log.d(TAG,"start")
     }
-    private fun getMonthSchedule() {
+    fun getMonthSchedule() {
         repository.loadAllSchedule().subscribe({},{
             Log.d(TAG,"${it.message}")
         }).let { addDisposable(it) }
     }
     fun getDaySchedule(date : Date) {
+        Log.d(TAG,"${date}")
         repository.getSchedule(date).subscribe({},{
             Log.d(TAG,"day schedule error : ${it.message}")
         }).let { addDisposable(it) }

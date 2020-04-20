@@ -31,13 +31,9 @@ class AddScheduleViewModel(
         date: String,
         etcDes: String?
     ) {
-        val simple = SimpleDateFormat("yyyy-MM-dd ")
-        val t = simple.format(Date())
-        val timeSimple = SimpleDateFormat("HH:mm")
-        val test = date.split(" ")
-        Log.d(TAG,"$test")
-        val dateFormat : Date = simple.parse(test[0])
-        val timeFormat : Date = timeSimple.parse(test[1])
+        val dateList = date.split(" ")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd").parse(dateList[0])
+        val timeFormat = SimpleDateFormat("HH:mm").parse(dateList[1])
         val calDate = dateToCalendar(date)
         val year = calDate.get(Calendar.YEAR)
         val month = calDate.get(Calendar.MONTH) +1
@@ -45,8 +41,8 @@ class AddScheduleViewModel(
         val schedule = Schedule(
             id = null,
             name = userName,
-            date = dateFormat,
-            time = timeFormat,
+            date = dateFormat!!,
+            time = timeFormat!!,
             month =yearAndMonth,
             phoneNum = number,
             reservationContent = "테스트입니다."
