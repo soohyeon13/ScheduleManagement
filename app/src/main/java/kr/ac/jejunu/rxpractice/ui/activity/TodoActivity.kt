@@ -1,54 +1,68 @@
 package kr.ac.jejunu.rxpractice.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
-import kotlinx.android.synthetic.main.activity_todo.*
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
+import kr.ac.jejunu.rxpractice.ui.activity.viewmodel.TodoViewModel
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.databinding.ActivityTodoBinding
+import org.koin.android.ext.android.inject
 
-class TodoActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityTodoBinding
-
+class TodoActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+    private lateinit var binding: ActivityTodoBinding
+    private val viewModel: TodoViewModel by inject()
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_todo)
-        binding.lifecycleOwner = this
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_todo)
         initView()
+        observe()
     }
-    fun initView() {
-        val host =
-            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment? ?: return
+
+    private fun observe() {
+
+    }
+
+    private fun initView() {
+        navController = Navigation.findNavController(this, R.id.navFragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         setSupportActionBar(binding.toolbar)
-        binding.toolbar.setupWithNavController(host.navController)
-        supportActionBar!!.apply {
-            setDisplayShowTitleEnabled(false)
-            setDisplayHomeAsUpEnabled(false)
-            setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24dp)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.navigationView.setupWithNavController(navController)
+        binding.navigationView.setNavigationItemSelectedListener(this)
+
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.action_money -> {
-                NavigationUI.onNavDestinationSelected(item,NavHostFragment.findNavController(fragment))
-            }
-            R.id.action_search -> {
-                val intent = Intent(this,SearchActivity::class.java)
-                startActivity(intent)
+            R.id.sales -> {
+                Toast.makeText(this,"click",Toast.LENGTH_SHORT).show()
             }
         }
-        return true
+        return false
     }
-    override fun onSupportNavigateUp() = NavHostFragment.findNavController(fragment).navigateUp()
 }
