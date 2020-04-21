@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="scheduleViewModel"
             type="kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.ScheduleViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/timeTableContainer"
         android:layout_width="match_parent"
@@ -19,7 +21,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="1900 년 00 월 00 일"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,22 +47,35 @@
                     android:text="@string/time_09" />
 
                 <LinearLayout
+                    android:id="@+id/container09"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name09"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time09"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
+
             <TableRow>
 
                 <TextView
@@ -71,15 +85,26 @@
                     android:text="@string/time_10" />
 
                 <LinearLayout
+                    android:id="@+id/container10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name10"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -87,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -98,15 +123,26 @@
                     android:text="@string/time_11" />
 
                 <LinearLayout
+                    android:id="@+id/container11"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name11"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -114,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -125,15 +161,26 @@
                     android:text="@string/time_12" />
 
                 <LinearLayout
+                    android:id="@+id/container12"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name12"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -141,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -152,15 +199,26 @@
                     android:text="@string/time_13" />
 
                 <LinearLayout
+                    android:id="@+id/container13"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name13"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -168,7 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -179,15 +237,26 @@
                     android:text="@string/time_14" />
 
                 <LinearLayout
+                    android:id="@+id/container14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name14"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -195,7 +264,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -206,15 +275,26 @@
                     android:text="@string/time_15" />
 
                 <LinearLayout
+                    android:id="@+id/container15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name15"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -222,7 +302,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -233,15 +313,26 @@
                     android:text="@string/time_16" />
 
                 <LinearLayout
+                    android:id="@+id/container16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name16"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -249,7 +340,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -260,15 +351,26 @@
                     android:text="@string/time_17" />
 
                 <LinearLayout
+                    android:id="@+id/container17"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name17"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -276,7 +378,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -287,15 +389,26 @@
                     android:text="@string/time_18" />
 
                 <LinearLayout
+                    android:id="@+id/container18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name18"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -303,7 +416,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -314,15 +427,26 @@
                     android:text="@string/time_19" />
 
                 <LinearLayout
+                    android:id="@+id/container19"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name19"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
@@ -330,7 +454,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:background="@drawable/dash_line"
-                android:layerType="software"/>
+                android:layerType="software" />
 
             <TableRow>
 
@@ -341,15 +465,26 @@
                     android:text="@string/time_20" />
 
                 <LinearLayout
+                    android:id="@+id/container20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/name20"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="test1"
-                        android:textSize="30dp" />
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/reservation20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/time20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </TableRow>
 
