@@ -6,6 +6,9 @@
         android:color="@color/colorCard"/>
 
     <corners
-        android:radius="5dp"/>
+        android:radius="2dp"/>
 
+    <size
+        android:width="20dp"
+        android:height="20dp"/>
 </shape>

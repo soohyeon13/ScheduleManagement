@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -68,12 +69,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/childView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,20 +85,35 @@
                     android:id="@+id/calendar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     app:forwardButtonSrc="@drawable/ic_arrow_forward_black_24dp"
-                    app:previousButtonSrc="@drawable/ic_arrow_back_black_24dp"
                     app:headerColor="@color/colorWhite"
                     app:headerLabelColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:previousButtonSrc="@drawable/ic_arrow_back_black_24dp"
                     app:type="classic" />
 
-                <include
-                    android:id="@+id/timeTable"
-                    bind:scheduleViewModel ="@{scheduleViewModel}"
-                    layout="@layout/time_table_layout" />
+                <TextView
+                    android:id="@+id/todayText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="****"
+                    android:textSize="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/calendar"
+                    tools:layout_editor_absoluteX="0dp" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dayRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/todayText"
+                    tools:listitem="@layout/time_schedule_item" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

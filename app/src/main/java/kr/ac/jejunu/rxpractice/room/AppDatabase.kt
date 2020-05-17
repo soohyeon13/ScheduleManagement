@@ -7,7 +7,7 @@ import kr.ac.jejunu.rxpractice.data.response.Schedule
 import kr.ac.jejunu.rxpractice.data.service.ScheduleService
 import kr.ac.jejunu.rxpractice.util.Converters
 
-@Database(entities = [Schedule::class],version = 1)
+@Database(entities = [Schedule::class],version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun scheduleService() : ScheduleService

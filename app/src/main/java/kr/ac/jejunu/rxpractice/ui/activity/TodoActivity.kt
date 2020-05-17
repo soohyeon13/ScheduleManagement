@@ -18,7 +18,7 @@ import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.databinding.ActivityTodoBinding
 import org.koin.android.ext.android.inject
 
-class TodoActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelectedListener {
+class TodoActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityTodoBinding
     private val viewModel: TodoViewModel by inject()
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -58,9 +58,9 @@ class TodoActivity : AppCompatActivity(),NavigationView.OnNavigationItemSelected
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.sales -> {
-                Toast.makeText(this,"click",Toast.LENGTH_SHORT).show()
+                navController.navigate(R.id.action_scheduleFragment_to_salesFragment)
             }
         }
         return false

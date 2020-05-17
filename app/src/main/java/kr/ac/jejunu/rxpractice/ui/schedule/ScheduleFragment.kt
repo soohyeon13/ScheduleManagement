@@ -3,21 +3,25 @@ package kr.ac.jejunu.rxpractice.ui.schedule
 import android.animation.ObjectAnimator
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.LinearLayout
 import android.widget.ScrollView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.applandeo.materialcalendarview.EventDay
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.base.BaseFragment
 import kr.ac.jejunu.rxpractice.data.response.Schedule
 import kr.ac.jejunu.rxpractice.databinding.FragmentScheduleBinding
+import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
+import kr.ac.jejunu.rxpractice.ui.schedule.adapter.TimeAdapter
 import kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.ScheduleViewModel
+import kr.ac.jejunu.rxpractice.util.RVDivider
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,6 +33,8 @@ class ScheduleFragment
         private val TAG = "ScheduleFragment"
     }
 
+    private val timeAdapter: TimeAdapter by inject()
+    private val timeArr = ArrayList<TimeSchedule>()
     private val todayEndFormat = arrayOf("년", "월", "일")
     private val baseFormat = SimpleDateFormat("yyyy-MM-dd")
     private var isOpen = false
@@ -42,9 +48,13 @@ class ScheduleFragment
     }
 
     private fun initView() {
-        viewModel.getDaySchedule(selectDay(Calendar.getInstance())!!)
-        binding.timeTable.todayText.text = getToday(Calendar.getInstance().time)
-        viewModel.getMonthSchedule()
+        binding.dayRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL))
+            adapter = timeAdapter
+            setHasFixedSize(true)
+        }
+        binding.todayText.text = selectDay(Calendar.getInstance())!!.toString()
         with(binding.calendar) {
             setOnDayClickListener(object : OnDayClickListener {
                 override fun onDayClick(eventDay: EventDay) {
@@ -63,6 +73,8 @@ class ScheduleFragment
     }
 
     private fun observe() {
+        viewModel.getDaySchedule(selectDay(Calendar.getInstance())!!)
+        viewModel.getMonthSchedule()
         with(viewModel) {
             fabClick.observe(viewLifecycleOwner, Observer {
                 animation()
@@ -70,30 +82,64 @@ class ScheduleFragment
             fabSchedule.observe(viewLifecycleOwner, Observer {
                 findNavController().navigate(R.id.action_scheduleFragment_to_addScheduleFragment)
             })
+            //load month item
             scheduleLiveData.observe(viewLifecycleOwner, Observer { cal ->
                 val eventDays = cal.map { EventDay(toCalendar(it), R.drawable.ic_icon) }
                 binding.calendar.setEvents(eventDays)
             })
-            dayScheduleLiveData.observe(viewLifecycleOwner, Observer { schedule ->
-                getTodayItems(schedule)
-                itemClassification(schedule)
+            //load day item
+            dayScheduleLiveData.observe(viewLifecycleOwner, Observer { schedules ->
+                getTodayItems(schedules)
             })
         }
     }
 
-    private fun getTodayItems(schedule: List<Schedule>) {
-        if (schedule.isEmpty()) {
-            Toast.makeText(requireContext(), "일정이 없습니다.", Toast.LENGTH_SHORT).show()
+    private fun getTodayItems(schedules: List<Schedule>) {
+        if (schedules.isEmpty()) {
+            Toast.makeText(requireContext(), "등록된 일정이 없습니다.", Toast.LENGTH_SHORT).show()
         } else {
-            binding.timeTable.todayText.text = getToday(schedule.first().date)
+            timeArr.clear()
+            val sortSchedules = schedules.sortedBy { it.time }
+            val cal = Calendar.getInstance()
+            for (i in 10..21) {
+                val time = StringBuilder()
+                var check = true
+                var currentTime = 0
+                if (i in 10..11) time.append("AM").append(" ")
+                else time.append("PM").append(" ")
+                if (i % 12 == 0) currentTime = 12
+                else currentTime = i % 12
+                time.append(currentTime)
+                for (schedule in sortSchedules) {
+                    cal.time = schedule.time
+                    val hour = cal.get(Calendar.HOUR_OF_DAY)
+                    if (hour == i) {
+                        timeArr.add(
+                            TimeSchedule(
+                                time.toString(),
+                                schedule.name,
+                                schedule.time,
+                                schedule.reservationContent
+                            )
+                        )
+                        check = false
+                        break
+                    }
+                }
+                if (check) timeArr.add(TimeSchedule(time.toString()))
+            }
+            timeAdapter.setSchedules(timeArr)
+            binding.todayText.text = schedules.first().date?.let { getToday(it) }
+            Log.d(TAG,timeArr.toString())
             if (isStartCheck) {
+                println("isStartCheck")
                 binding.scrollView.apply {
-                    requestChildFocus(binding.childView, binding.timeTable.timeTableContainer)
-                    smoothScrollToView(binding.timeTable.timeTableContainer)
+                    requestChildFocus(binding.childView, binding.dayRecyclerView)
+                    smoothScrollToView(binding.dayRecyclerView)
                 }
             }
+            isStartCheck = true
         }
-        isStartCheck = true
     }
 
     private fun getToday(date: Date): String {
@@ -159,84 +205,4 @@ class ScheduleFragment
         calendar.time = date
         return calendar
     }
-
-    private fun setScheduleItem(nameText: TextView, orderText: TextView, timeText: TextView,container:LinearLayout, schedule: Schedule, timeZon: List<Int>) {
-        nameText.text = schedule.name
-        orderText.text = schedule.reservationContent
-        timeText.text = timeZon.joinToString { ":" }
-        container.setBackgroundColor(resources.getColor(R.color.colorBasic))
-    }
-
-    //제발 고치고 싶다... 이 부분은 도저히 생각이 안난다....
-    //너무 과한 하드 코딩,,,,
-    private fun itemClassification(schedules: List<Schedule>) {
-        val timeFormat = SimpleDateFormat("HH:mm")
-        for (element in schedules) {
-            val timeZon = timeFormat.format(element.time).split(":").map { it.toInt() }
-            when (timeZon[0]) {
-                //오우야,,, 코드
-                9 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name09, this.reservation09, this.time09,this.container09, element, timeZon)
-                    }
-                }
-                10 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name10,this.reservation10,this.time10,this.container10,element,timeZon)
-                    }
-                }
-                11 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name11, this.reservation11, this.time11,this.container11, element, timeZon)
-                    }
-                }
-                12 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name12, this.reservation12, this.time12,this.container12, element, timeZon)
-                    }
-                }
-                13 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name13, this.reservation13, this.time13,this.container13, element, timeZon)
-                    }
-                }
-                14 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name14, this.reservation14, this.time14,this.container14, element, timeZon)
-                    }
-                }
-                15 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name15, this.reservation15, this.time15,this.container15, element, timeZon)
-                    }
-                }
-                16 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name16, this.reservation16, this.time16,this.container16, element, timeZon)
-                    }
-                }
-                17 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name17, this.reservation17, this.time17,this.container17, element, timeZon)
-                    }
-                }
-                18 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name18, this.reservation18, this.time18,this.container18, element, timeZon)
-                    }
-                }
-                19 -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name19, this.reservation19, this.time19,this.container19, element, timeZon)
-                    }
-                }
-                else -> {
-                    binding.timeTable.apply {
-                        setScheduleItem(this.name20, this.reservation20, this.time20,this.container20, element, timeZon)
-                    }
-                }
-            }
-        }
-    }
-
 }

@@ -4,6 +4,7 @@ import androidx.room.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import kr.ac.jejunu.rxpractice.data.response.Schedule
+import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 import java.util.*
 
 @Dao

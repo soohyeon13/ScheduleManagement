@@ -7,7 +7,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import kr.ac.jejunu.rxpractice.data.response.Schedule
 import kr.ac.jejunu.rxpractice.data.service.ScheduleService
-import kr.ac.jejunu.rxpractice.repository.ScheduleRepository
+import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
+import kr.ac.jejunu.rxpractice.domain.repository.ScheduleRepository
 import java.util.*
 
 class ScheduleRepositoryImpl(

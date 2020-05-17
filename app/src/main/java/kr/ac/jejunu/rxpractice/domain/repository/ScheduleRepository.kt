@@ -1,8 +1,9 @@
-package kr.ac.jejunu.rxpractice.repository
+package kr.ac.jejunu.rxpractice.domain.repository
 
 import io.reactivex.Completable
 import kr.ac.jejunu.rxpractice.data.response.Schedule
 import io.reactivex.Observable
+import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 import java.util.*
 
 interface ScheduleRepository {

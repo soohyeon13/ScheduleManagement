@@ -14,5 +14,6 @@
     <color name="colorNonMember">#EFCEC5</color>
     <color name="colorCard">#97D5E0</color>
     <color name="colorCash">#88B14B</color>
-    <color name="colorTransParent">#20000000</color>
+    <color name="colorTransParent">#00000000</color>
+    <color name="colorYellow">#FFDC46</color>
 </resources>

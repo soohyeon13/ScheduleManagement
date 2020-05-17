@@ -11,13 +11,13 @@ import java.util.*
 @TypeConverters(Converters::class)
 data class Schedule(
     @PrimaryKey(autoGenerate = true)
-    val id : Int?,
-    var name: String,
-    var phoneNum : String,
-    var date : Date,
-    var time : Date,
-    var month : String,
+    val id : Int? =1,
+    var name: String? = "",
+    var phoneNum : String? ="",
+    var date : Date? = null,
+    var time : Date? = null,
+    var month : String? = "",
     @ColumnInfo(name = "reservation_content")
-    var reservationContent : String,
+    var reservationContent : String? = "",
     var memo : String? = ""
 )

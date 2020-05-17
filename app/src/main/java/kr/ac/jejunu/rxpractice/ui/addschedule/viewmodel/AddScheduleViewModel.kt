@@ -1,10 +1,9 @@
 package kr.ac.jejunu.rxpractice.ui.addschedule.viewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
 import kr.ac.jejunu.rxpractice.base.BaseViewModel
 import kr.ac.jejunu.rxpractice.data.response.Schedule
-import kr.ac.jejunu.rxpractice.repository.ScheduleRepository
+import kr.ac.jejunu.rxpractice.domain.repository.ScheduleRepository
 import kr.ac.jejunu.rxpractice.util.SingleLiveEvent
 import java.text.SimpleDateFormat
 import java.util.*
