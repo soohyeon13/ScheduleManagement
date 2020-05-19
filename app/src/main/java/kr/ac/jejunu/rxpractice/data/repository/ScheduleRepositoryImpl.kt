@@ -37,7 +37,8 @@ class ScheduleRepositoryImpl(
             .subscribeOn(Schedulers.io())
             .subscribe(
                 { Log.d(TAG, "insert success") },
-                { Log.d(TAG, "insert false") }).dispose()
+                { Log.d(TAG, "insert false") })
+            .dispose()
     }
 
     override fun getItem(): Observable<List<Date>> {
@@ -50,5 +51,13 @@ class ScheduleRepositoryImpl(
             .subscribeOn(Schedulers.io())
             .doOnSuccess { allItems.onNext(it) }
             .ignoreElement()
+    }
+
+    override fun removeSchedule(schedule: Schedule) {
+        return service.deleteSchedule(schedule)
+            .subscribeOn(Schedulers.io())
+            .subscribe({},
+                { Log.d(TAG, "error delete schedule ${it.message}") })
+            .dispose()
     }
 }

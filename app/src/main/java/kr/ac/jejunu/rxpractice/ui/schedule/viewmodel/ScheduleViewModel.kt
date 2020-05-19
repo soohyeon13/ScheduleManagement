@@ -7,6 +7,7 @@ import com.google.gson.annotations.Until
 import io.reactivex.BackpressureStrategy
 import kr.ac.jejunu.rxpractice.base.BaseViewModel
 import kr.ac.jejunu.rxpractice.data.response.Schedule
+import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 import kr.ac.jejunu.rxpractice.domain.repository.ScheduleRepository
 import kr.ac.jejunu.rxpractice.util.SingleLiveEvent
 import java.util.*
@@ -27,6 +28,11 @@ class ScheduleViewModel(
         repository.loadAllSchedule().subscribe({}, {
             Log.d(TAG, "${it.message}")
         }).let { addDisposable(it) }
+    }
+
+    fun removeSchedule(item : Schedule) {
+        println(item.toString())
+        repository.removeSchedule(item)
     }
 
     fun getDaySchedule(date: Date) {

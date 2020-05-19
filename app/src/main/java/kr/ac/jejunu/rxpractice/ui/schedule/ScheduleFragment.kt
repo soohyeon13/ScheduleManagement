@@ -1,8 +1,11 @@
 package kr.ac.jejunu.rxpractice.ui.schedule
 
 import android.animation.ObjectAnimator
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -20,9 +23,11 @@ import kr.ac.jejunu.rxpractice.data.response.Schedule
 import kr.ac.jejunu.rxpractice.databinding.FragmentScheduleBinding
 import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 import kr.ac.jejunu.rxpractice.ui.schedule.adapter.TimeAdapter
+import kr.ac.jejunu.rxpractice.ui.schedule.listener.OnItemClickListener
 import kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.ScheduleViewModel
 import kr.ac.jejunu.rxpractice.util.RVDivider
 import org.koin.android.ext.android.inject
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
@@ -50,11 +55,11 @@ class ScheduleFragment
     private fun initView() {
         binding.dayRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            addItemDecoration(DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL))
+            addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
             adapter = timeAdapter
             setHasFixedSize(true)
         }
-        binding.todayText.text = selectDay(Calendar.getInstance())!!.toString()
+        binding.todayText.text = getToday(Calendar.getInstance().time)
         with(binding.calendar) {
             setOnDayClickListener(object : OnDayClickListener {
                 override fun onDayClick(eventDay: EventDay) {
@@ -62,6 +67,59 @@ class ScheduleFragment
                 }
             })
         }
+        timeAdapter.setOnItemClickListener(object : OnItemClickListener<TimeSchedule> {
+            override fun onItemClick(item: TimeSchedule?, position: Int) {
+                showDialog(item, position)
+            }
+        })
+    }
+
+    private fun showDialog(item: TimeSchedule?, position: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("목록")
+        if (item?.schedule == null) {
+            builder.setItems(R.array.empty_time_schedule_content) { _, pos ->
+                findNavController().navigate(R.id.action_scheduleFragment_to_addScheduleFragment)
+            }
+        } else {
+            builder.setItems(R.array.time_schedule_content_list) { dialog, pos ->
+                val bundle = Bundle()
+                bundle.putParcelable("schedule", item)
+                when (pos) {
+                    0 -> {
+                        //Todo pass data Object using bundle or argument
+                        findNavController()
+                            .navigate(R.id.action_scheduleFragment_to_addScheduleFragment, bundle)
+                    }
+                    1 -> {
+                        checkRemove(item, position)
+                        dialog.dismiss()
+                    }
+                    2 -> {
+                        Toast.makeText(requireContext(), "정산 click", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    private fun checkRemove(item: TimeSchedule, position: Int) {
+        val time = item.time
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("정말 삭제하시겠습니까?")
+        builder.setPositiveButton("삭제") { dialog, _ ->
+            item.schedule?.let { viewModel.removeSchedule(it) }
+            timeArr[position] = TimeSchedule(time)
+            timeAdapter.setSchedules(timeArr)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("취소") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create()
+        builder.show()
     }
 
     private fun selectDay(select: Calendar): Date? {
@@ -95,51 +153,44 @@ class ScheduleFragment
     }
 
     private fun getTodayItems(schedules: List<Schedule>) {
-        if (schedules.isEmpty()) {
-            Toast.makeText(requireContext(), "등록된 일정이 없습니다.", Toast.LENGTH_SHORT).show()
-        } else {
-            timeArr.clear()
-            val sortSchedules = schedules.sortedBy { it.time }
-            val cal = Calendar.getInstance()
-            for (i in 10..21) {
-                val time = StringBuilder()
-                var check = true
-                var currentTime = 0
-                if (i in 10..11) time.append("AM").append(" ")
-                else time.append("PM").append(" ")
-                if (i % 12 == 0) currentTime = 12
-                else currentTime = i % 12
-                time.append(currentTime)
-                for (schedule in sortSchedules) {
-                    cal.time = schedule.time
-                    val hour = cal.get(Calendar.HOUR_OF_DAY)
-                    if (hour == i) {
-                        timeArr.add(
-                            TimeSchedule(
-                                time.toString(),
-                                schedule.name,
-                                schedule.time,
-                                schedule.reservationContent
-                            )
+        timeArr.clear()
+        val sortSchedules = schedules.sortedBy { it.time }
+        val cal = Calendar.getInstance()
+        for (i in 10..21) {
+            val time = StringBuilder()
+            var check = true
+            var currentTime = 0
+            if (i in 10..11) time.append("AM").append(" ")
+            else time.append("PM").append(" ")
+            if (i % 12 == 0) currentTime = 12
+            else currentTime = i % 12
+            time.append(currentTime)
+            for (schedule in sortSchedules) {
+                cal.time = schedule.time
+                val hour = cal.get(Calendar.HOUR_OF_DAY)
+                if (hour == i) {
+                    timeArr.add(
+                        TimeSchedule(
+                            time.toString(), schedule
                         )
-                        check = false
-                        break
-                    }
-                }
-                if (check) timeArr.add(TimeSchedule(time.toString()))
-            }
-            timeAdapter.setSchedules(timeArr)
-            binding.todayText.text = schedules.first().date?.let { getToday(it) }
-            Log.d(TAG,timeArr.toString())
-            if (isStartCheck) {
-                println("isStartCheck")
-                binding.scrollView.apply {
-                    requestChildFocus(binding.childView, binding.dayRecyclerView)
-                    smoothScrollToView(binding.dayRecyclerView)
+                    )
+                    check = false
+                    break
                 }
             }
-            isStartCheck = true
+            if (check) timeArr.add(TimeSchedule(time.toString()))
         }
+        timeAdapter.setSchedules(timeArr)
+        if (schedules.isNotEmpty()) {
+            binding.todayText.text = schedules.first().date?.let { getToday(it) }
+        }
+        if (isStartCheck) {
+            binding.scrollView.apply {
+                requestChildFocus(binding.childView, binding.dayRecyclerView)
+                smoothScrollToView(binding.dayRecyclerView)
+            }
+        }
+        isStartCheck = true
     }
 
     private fun getToday(date: Date): String {

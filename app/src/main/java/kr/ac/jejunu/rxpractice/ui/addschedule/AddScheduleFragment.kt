@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.provider.ContactsContract
 import android.util.DisplayMetrics
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import kr.ac.jejunu.rxpractice.base.BaseFragment
 import kr.ac.jejunu.rxpractice.R
 import kr.ac.jejunu.rxpractice.databinding.FragmentAddScheduleBinding
+import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 import kr.ac.jejunu.rxpractice.ui.addschedule.viewmodel.AddScheduleViewModel
 import org.koin.android.ext.android.inject
 import java.lang.Boolean.parseBoolean
@@ -35,6 +37,13 @@ class AddScheduleFragment :
     }
 
     private fun initView() {
+        arguments?.let {
+            val schedule = it.getParcelable<TimeSchedule>("schedule")
+            schedule?.let {s ->
+                binding.userNameText.setText(s.schedule?.name)
+                binding.userNumInputText.setText(s.schedule?.phoneNum)
+            }
+        }
         setSaveBtnWidth()
     }
 

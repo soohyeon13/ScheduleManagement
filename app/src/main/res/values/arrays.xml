@@ -33,4 +33,14 @@
         <item>회원</item>
         <item>비회원</item>
     </string-array>
+
+    <string-array name="time_schedule_content_list">
+        <item>예약 수정</item>
+        <item>예약 삭제</item>
+        <item>정산</item>
+    </string-array>
+
+    <string-array name="empty_time_schedule_content">
+        <item>예약 추가</item>
+    </string-array>
 </resources>

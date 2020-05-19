@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="itemViewModel"
+            type="kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.itemviewmodel.ScheduleItemViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -10,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/time_09"
+            android:text="@{itemViewModel.time}"
             app:layout_constraintBottom_toBottomOf="@+id/container09"
             app:layout_constraintEnd_toStartOf="@+id/container09"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,16 +34,19 @@
 
             <TextView
                 android:id="@+id/name"
+                android:text="@{itemViewModel.name}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/content"
+                android:text="@{itemViewModel.content}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/reservationTime"
+                android:text="@{itemViewModel.date}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

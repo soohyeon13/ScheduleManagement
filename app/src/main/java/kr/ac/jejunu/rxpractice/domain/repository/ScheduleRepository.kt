@@ -12,4 +12,5 @@ interface ScheduleRepository {
     fun insertSchedule(schedule: Schedule)
     fun getItem(): Observable<List<Date>>
     fun loadAllSchedule() : Completable
+    fun removeSchedule(schedule: Schedule)
 }

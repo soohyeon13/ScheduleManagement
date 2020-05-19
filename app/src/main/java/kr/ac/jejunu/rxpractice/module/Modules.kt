@@ -8,7 +8,6 @@ import kr.ac.jejunu.rxpractice.ui.activity.viewmodel.TodoViewModel
 import kr.ac.jejunu.rxpractice.ui.addschedule.viewmodel.AddScheduleViewModel
 import kr.ac.jejunu.rxpractice.ui.schedule.adapter.TimeAdapter
 import kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.ScheduleViewModel
-import kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.TimeTableViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 
@@ -26,7 +25,6 @@ var viewModelModules = module {
     viewModel { TodoViewModel() }
     viewModel { ScheduleViewModel(get()) }
     viewModel { AddScheduleViewModel(get()) }
-    viewModel { TimeTableViewModel() }
 }
 
 var adapterModules = module {
