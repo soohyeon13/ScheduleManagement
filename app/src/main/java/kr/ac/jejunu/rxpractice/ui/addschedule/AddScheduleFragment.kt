@@ -38,7 +38,7 @@ class AddScheduleFragment :
 
     private fun initView() {
         arguments?.let {
-            val schedule = it.getParcelable<TimeSchedule>("schedule")
+            val schedule = it.getParcelable<TimeSchedule>("update")
             schedule?.let {s ->
                 binding.userNameText.setText(s.schedule?.name)
                 binding.userNumInputText.setText(s.schedule?.phoneNum)

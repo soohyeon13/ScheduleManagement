@@ -2,15 +2,12 @@ package kr.ac.jejunu.rxpractice.ui.schedule
 
 import android.animation.ObjectAnimator
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ScrollView
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,11 +20,11 @@ import kr.ac.jejunu.rxpractice.data.response.Schedule
 import kr.ac.jejunu.rxpractice.databinding.FragmentScheduleBinding
 import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 import kr.ac.jejunu.rxpractice.ui.schedule.adapter.TimeAdapter
+import kr.ac.jejunu.rxpractice.ui.schedule.dialog.ScheduleBottomDialog
+import kr.ac.jejunu.rxpractice.ui.schedule.dialog.ScheduleBottomEmpty
 import kr.ac.jejunu.rxpractice.ui.schedule.listener.OnItemClickListener
 import kr.ac.jejunu.rxpractice.ui.schedule.viewmodel.ScheduleViewModel
-import kr.ac.jejunu.rxpractice.util.RVDivider
 import org.koin.android.ext.android.inject
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.abs
@@ -68,58 +65,20 @@ class ScheduleFragment
             })
         }
         timeAdapter.setOnItemClickListener(object : OnItemClickListener<TimeSchedule> {
-            override fun onItemClick(item: TimeSchedule?, position: Int) {
-                showDialog(item, position)
+            override fun onItemClick(item: TimeSchedule?) {
+                showDialog(item)
             }
         })
     }
 
-    private fun showDialog(item: TimeSchedule?, position: Int) {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("목록")
+    private fun showDialog(item: TimeSchedule?) {
+        val bundle = Bundle()
+        bundle.putParcelable("schedule", item)
         if (item?.schedule == null) {
-            builder.setItems(R.array.empty_time_schedule_content) { _, pos ->
-                findNavController().navigate(R.id.action_scheduleFragment_to_addScheduleFragment)
-            }
+            ScheduleBottomEmpty.newInstance().show(childFragmentManager, "empty")
         } else {
-            builder.setItems(R.array.time_schedule_content_list) { dialog, pos ->
-                val bundle = Bundle()
-                bundle.putParcelable("schedule", item)
-                when (pos) {
-                    0 -> {
-                        //Todo pass data Object using bundle or argument
-                        findNavController()
-                            .navigate(R.id.action_scheduleFragment_to_addScheduleFragment, bundle)
-                    }
-                    1 -> {
-                        checkRemove(item, position)
-                        dialog.dismiss()
-                    }
-                    2 -> {
-                        Toast.makeText(requireContext(), "정산 click", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
+            ScheduleBottomDialog.newInstance(item).show(childFragmentManager,"dialog")
         }
-        val alertDialog = builder.create()
-        alertDialog.show()
-    }
-
-    private fun checkRemove(item: TimeSchedule, position: Int) {
-        val time = item.time
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setMessage("정말 삭제하시겠습니까?")
-        builder.setPositiveButton("삭제") { dialog, _ ->
-            item.schedule?.let { viewModel.removeSchedule(it) }
-            timeArr[position] = TimeSchedule(time)
-            timeAdapter.setSchedules(timeArr)
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("취소") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.create()
-        builder.show()
     }
 
     private fun selectDay(select: Calendar): Date? {
@@ -147,12 +106,14 @@ class ScheduleFragment
             })
             //load day item
             dayScheduleLiveData.observe(viewLifecycleOwner, Observer { schedules ->
+                Log.d(TAG, "check1 ${schedules.toString()}")
                 getTodayItems(schedules)
             })
         }
     }
 
     private fun getTodayItems(schedules: List<Schedule>) {
+        if (schedules.isEmpty()) Log.d(TAG, "empty")
         timeArr.clear()
         val sortSchedules = schedules.sortedBy { it.time }
         val cal = Calendar.getInstance()
@@ -180,6 +141,7 @@ class ScheduleFragment
             }
             if (check) timeArr.add(TimeSchedule(time.toString()))
         }
+        Log.d(TAG, "check2 ${timeArr.toString()}")
         timeAdapter.setSchedules(timeArr)
         if (schedules.isNotEmpty()) {
             binding.todayText.text = schedules.first().date?.let { getToday(it) }

@@ -1,5 +1,6 @@
 package kr.ac.jejunu.rxpractice.ui.schedule.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ class TimeAdapter : RecyclerView.Adapter<TimeViewHolder>() {
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
         holder.bind(timeSchedule[position]!!)
-        holder.setListener(View.OnClickListener { mItemClickListener.onItemClick(timeSchedule[position],position) })
+        holder.setListener(View.OnClickListener { mItemClickListener.onItemClick(timeSchedule[position]) })
     }
 
     fun setSchedules(schedule: ArrayList<TimeSchedule>) {
@@ -38,6 +39,7 @@ class TimeAdapter : RecyclerView.Adapter<TimeViewHolder>() {
         this.timeSchedule.clear()
         this.timeSchedule.addAll(schedule)
         diffResult.dispatchUpdatesTo(this)
+        Log.d("adapter","check3  ${timeSchedule.toString()}")
     }
 
     fun setOnItemClickListener(itemClick: OnItemClickListener<TimeSchedule>) {

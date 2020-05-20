@@ -1,5 +1,6 @@
 package kr.ac.jejunu.rxpractice.util
 
+import android.util.Log
 import androidx.recyclerview.widget.DiffUtil
 import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 
