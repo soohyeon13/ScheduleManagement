@@ -141,7 +141,6 @@ class ScheduleFragment
             }
             if (check) timeArr.add(TimeSchedule(time.toString()))
         }
-        Log.d(TAG, "check2 ${timeArr.toString()}")
         timeAdapter.setSchedules(timeArr)
         if (schedules.isNotEmpty()) {
             binding.todayText.text = schedules.first().date?.let { getToday(it) }

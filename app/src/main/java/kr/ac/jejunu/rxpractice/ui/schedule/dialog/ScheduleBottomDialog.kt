@@ -3,6 +3,7 @@ package kr.ac.jejunu.rxpractice.ui.schedule.dialog
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 
 class ScheduleBottomDialog : BottomSheetDialogFragment() {
     private lateinit var binding: TimeScheduleDialogLayoutBinding
+    private val bundle = Bundle()
 
     companion object {
         fun newInstance(data: TimeSchedule): ScheduleBottomDialog {
@@ -26,6 +28,13 @@ class ScheduleBottomDialog : BottomSheetDialogFragment() {
             val fragment = ScheduleBottomDialog()
             fragment.arguments = bundle
             return fragment
+        }
+    }
+
+    init {
+        arguments?.getParcelable<TimeSchedule>("data")?.let { item ->
+            Log.d("aa",item.toString())
+            bundle.putParcelable("schedlue", item)
         }
     }
 
@@ -44,21 +53,16 @@ class ScheduleBottomDialog : BottomSheetDialogFragment() {
             container,
             false
         )
-        arguments?.getParcelable<TimeSchedule>("data")?.let { item ->
-            binding.updateSchedule.setOnClickListener {
-                val arg = Bundle()
-                arg.putParcelable("update", item)
-                findNavController().navigate(R.id.action_scheduleFragment_to_addScheduleFragment, arg)
-            }
+        binding.updateSchedule.setOnClickListener {
+            findNavController().navigate(R.id.action_scheduleFragment_to_addScheduleFragment, bundle)
         }
         binding.deleteSchedule.setOnClickListener {
             Toast.makeText(requireContext(), "delete click", Toast.LENGTH_SHORT).show()
         }
-        binding.cancel.setOnClickListener { dismiss() }
         binding.goSales.setOnClickListener {
-            Toast.makeText(requireContext(), "go sales", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_scheduleFragment_to_salesInputFragment, bundle)
         }
-
+        binding.cancel.setOnClickListener { dismiss() }
         return binding.root
     }
 }

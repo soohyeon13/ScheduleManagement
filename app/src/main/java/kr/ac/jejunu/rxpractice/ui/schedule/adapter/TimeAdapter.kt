@@ -26,7 +26,10 @@ class TimeAdapter : RecyclerView.Adapter<TimeViewHolder>() {
         return TimeViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = timeSchedule.size
+    override fun getItemCount(): Int {
+        Log.d("adpater","test ${timeSchedule.size}")
+        return timeSchedule.size
+    }
 
     override fun onBindViewHolder(holder: TimeViewHolder, position: Int) {
         holder.bind(timeSchedule[position]!!)
@@ -39,7 +42,6 @@ class TimeAdapter : RecyclerView.Adapter<TimeViewHolder>() {
         this.timeSchedule.clear()
         this.timeSchedule.addAll(schedule)
         diffResult.dispatchUpdatesTo(this)
-        Log.d("adapter","check3  ${timeSchedule.toString()}")
     }
 
     fun setOnItemClickListener(itemClick: OnItemClickListener<TimeSchedule>) {

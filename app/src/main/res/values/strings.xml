@@ -19,6 +19,7 @@
     <string name="add_schedule">예약하기</string>
     <string name="add">일정 추가</string>
     <string name="check">확인</string>
+    <string name="submit">등록</string>
     <string name="person_select">고객 선택</string>
     <string name="input_money">금액</string>
     <string name="content">예약내용</string>
@@ -30,6 +31,7 @@
     <string name="repair">보수</string>
     <string name="hold">홀드핀칭</string>
     <string name="etc">기타</string>
+    <string name="sale">할인</string>
     <string name="today_sales">오늘 매출</string>
     <string name="member">회</string>
     <string name="non_member">비</string>
@@ -43,6 +45,7 @@
     <string name="money">\uFFE6</string>
     <string name="update_content">수정</string>
     <string name="cancel_content">삭제</string>
+    <string name="apply">적용</string>
     <string name="time_09">AM 09</string>
     <string name="time_10">AM 10</string>
     <string name="time_11">AM 11</string>
