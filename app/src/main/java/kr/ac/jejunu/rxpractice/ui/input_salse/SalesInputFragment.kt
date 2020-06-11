@@ -19,7 +19,6 @@ class SalesInputFragment : BaseFragment<SalesInputLayoutBinding>(R.layout.sales_
     }
     private fun initView() {
         arguments?.getParcelable<TimeSchedule>("schedule")?.let { schedule ->
-            Log.d("aaaas",schedule.toString())
         }
     }
 }

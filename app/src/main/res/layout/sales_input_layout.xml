@@ -66,7 +66,8 @@
                     android:text="@string/non_member" />
             </RadioGroup>
 
-            <include layout="@layout/content_layout" />
+            <include layout="@layout/content_layout"
+                app:viewmodel = "@{inputViewModel}" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -106,6 +107,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:hint="할인 금액"
                     android:layout_height="match_parent"
                     android:inputType="number" />
 
@@ -118,6 +121,7 @@
                 android:layout_marginStart="1dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/apply"
+                android:onClick="@{() -> inputViewModel.isApply()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout2"
