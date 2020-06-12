@@ -20,7 +20,6 @@ import kr.ac.jejunu.rxpractice.domain.model.TimeSchedule
 class ScheduleBottomDialog : BottomSheetDialogFragment() {
     private lateinit var binding: TimeScheduleDialogLayoutBinding
     private val bundle = Bundle()
-
     companion object {
         fun newInstance(data: TimeSchedule): ScheduleBottomDialog {
             val bundle = Bundle()
@@ -34,7 +33,7 @@ class ScheduleBottomDialog : BottomSheetDialogFragment() {
     init {
         arguments?.getParcelable<TimeSchedule>("data")?.let { item ->
             Log.d("aa",item.toString())
-            bundle.putParcelable("schedlue", item)
+            bundle.putParcelable("update", item)
         }
     }
 

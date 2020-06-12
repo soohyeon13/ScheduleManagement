@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.provider.ContactsContract
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,7 @@ import java.util.*
 
 class AddScheduleFragment :
     BaseFragment<FragmentAddScheduleBinding>(R.layout.fragment_add_schedule) {
+    private val TAG = "AddScheduleFragment"
     private val viewModel: AddScheduleViewModel by inject()
     private var userName = ""
     private var phoneNum = ""
@@ -37,6 +39,7 @@ class AddScheduleFragment :
     }
 
     private fun initView() {
+        Log.d(TAG,arguments.toString())
         arguments?.let {
             val schedule = it.getParcelable<TimeSchedule>("update")
             schedule?.let {s ->

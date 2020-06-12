@@ -61,14 +61,18 @@ class ScheduleFragment
             setOnDayClickListener(object : OnDayClickListener {
                 override fun onDayClick(eventDay: EventDay) {
                     viewModel.getDaySchedule(selectDay(eventDay.calendar)!!)
+                    binding.todayText.text = getToday(eventDay.calendar.time)
                 }
             })
         }
+        emptySchedule()
+        timeAdapter.setSchedules(timeArr)
         timeAdapter.setOnItemClickListener(object : OnItemClickListener<TimeSchedule> {
             override fun onItemClick(item: TimeSchedule?) {
                 showDialog(item)
             }
         })
+        binding.dayRecyclerView.isFocusable = false
     }
 
     private fun showDialog(item: TimeSchedule?) {
@@ -78,6 +82,8 @@ class ScheduleFragment
             ScheduleBottomEmpty.newInstance().show(childFragmentManager, "empty")
         } else {
             ScheduleBottomDialog.newInstance(item).show(childFragmentManager,"dialog")
+//            dialog.arguments = bundle
+//            dialog.show(childFragmentManager,"dialog")
         }
     }
 
@@ -106,14 +112,25 @@ class ScheduleFragment
             })
             //load day item
             dayScheduleLiveData.observe(viewLifecycleOwner, Observer { schedules ->
-                Log.d(TAG, "check1 ${schedules.toString()}")
                 getTodayItems(schedules)
             })
         }
     }
 
+    private fun emptySchedule() {
+        for (i in 10 .. 21) {
+            val time = StringBuilder()
+            var currentTime = 0
+            if (i in 10..11) time.append("AM").append(" ")
+            else time.append("PM").append(" ")
+            if (i % 12 == 0) currentTime = 12
+            else currentTime = i % 12
+            time.append(currentTime)
+            timeArr.add(TimeSchedule(time.toString()))
+        }
+    }
+
     private fun getTodayItems(schedules: List<Schedule>) {
-        if (schedules.isEmpty()) Log.d(TAG, "empty")
         timeArr.clear()
         val sortSchedules = schedules.sortedBy { it.time }
         val cal = Calendar.getInstance()
@@ -142,9 +159,6 @@ class ScheduleFragment
             if (check) timeArr.add(TimeSchedule(time.toString()))
         }
         timeAdapter.setSchedules(timeArr)
-        if (schedules.isNotEmpty()) {
-            binding.todayText.text = schedules.first().date?.let { getToday(it) }
-        }
         if (isStartCheck) {
             binding.scrollView.apply {
                 requestChildFocus(binding.childView, binding.dayRecyclerView)
@@ -208,7 +222,7 @@ class ScheduleFragment
     private fun ScrollView.smoothScrollToView(view: View) {
         val y = computeDistanceToView(view)
         ObjectAnimator.ofInt(this, "scrollY", y).apply {
-            duration = 1000L
+            duration = 3000L
         }.start()
     }
 

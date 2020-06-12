@@ -27,7 +27,6 @@ class TimeAdapter : RecyclerView.Adapter<TimeViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        Log.d("adpater","test ${timeSchedule.size}")
         return timeSchedule.size
     }
 
